@@ -35,9 +35,19 @@ class _ExpensesState extends State<Expenses> {
   }
 
   void _removeExpense(Expense exp) {
+    final expenseIndex=_regiesteredExpenses.indexOf(exp);
     setState(() {
       _regiesteredExpenses.remove(exp);
     });
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: const Text('Expense deleted'),
+      duration: const Duration(seconds: 3),
+      action : SnackBarAction(label: 'Undo', onPressed: (){
+        setState(() {
+          _regiesteredExpenses.insert(expenseIndex, exp);
+        });
+      })),);
   }
 
   void _openAddExpenseOverlay() {
@@ -51,28 +61,22 @@ class _ExpensesState extends State<Expenses> {
 
   @override
   Widget build(BuildContext context) {
-    Widget Content = Center(
-      child: Column(
-        children: [
-          Opacity(
-            opacity: 0.6,
-            child: Image.asset(
-              'assests/images/noExpenses.png',
-              // scale: 300,
-            ),
+    Widget content = Column(
+      children: [
+        Opacity(
+          opacity: 0.6,
+          child: Image.asset(
+            'assests/images/noExpenses.png',
+            // scale: 300,
           ),
-          const Text(
-            'No Expenses found',
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-              color: Color.fromARGB(255, 97, 96, 96)
-            ),
-          ),
-          const Text('Start tracking your Expenses, NOW !,',
-          style: TextStyle(fontSize: 20),),
-        ],
-      ),
+        ),
+        Text(
+          'No expenses found.',
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(fontSize: 30,),
+        ),
+        Text('Start tracking your Expenses, NOW !!,',
+        style: Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.normal,fontSize: 20),),
+      ],
     );
 
     return Scaffold(
@@ -83,19 +87,18 @@ class _ExpensesState extends State<Expenses> {
             icon: const Icon(Icons.add),
           )
         ],
-        title: const Text('Your Expense Tracker'),
+        title: Text('Your Expense Tracker',style: Theme.of(context).appBarTheme.titleTextStyle,),
       ),
       body: Column(
-        children: [
-          const Text('the chart'),
+        children: 
           (_regiesteredExpenses.isEmpty)
-              ? Content
-              : Expanded(
+              ? [content]
+              : [const Text('the chart'),Expanded(
                   child: ExpensesList(
                   expenses: _regiesteredExpenses,
                   onRemovedExpense: _removeExpense,
                 )),
-        ],
+              ]
       ),
     );
   }

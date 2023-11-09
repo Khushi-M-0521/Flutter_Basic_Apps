@@ -108,6 +108,7 @@ class _NewExpense extends State<NewExpense> {
                       _selectedDate == null
                           ? 'No Selected Date'
                           : formatter.format(_selectedDate!),
+                      style: Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.normal),
                     ),
                     IconButton(
                       onPressed: _presentDatePicker,
@@ -131,6 +132,7 @@ class _NewExpense extends State<NewExpense> {
                         value: category,
                         child: Text(
                           category.name.toUpperCase(),
+                          style: Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.normal),
                         ),
                       ),
                     )
