@@ -1,3 +1,4 @@
+import 'package:expense_tracker/widgets/chart/chart.dart';
 import 'package:expense_tracker/widgets/expenses_list/expenses_list.dart';
 import 'package:expense_tracker/models/expense.dart';
 import 'package:expense_tracker/widgets/new_expense.dart';
@@ -35,19 +36,23 @@ class _ExpensesState extends State<Expenses> {
   }
 
   void _removeExpense(Expense exp) {
-    final expenseIndex=_regiesteredExpenses.indexOf(exp);
+    final expenseIndex = _regiesteredExpenses.indexOf(exp);
     setState(() {
       _regiesteredExpenses.remove(exp);
     });
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: const Text('Expense deleted'),
-      duration: const Duration(seconds: 3),
-      action : SnackBarAction(label: 'Undo', onPressed: (){
-        setState(() {
-          _regiesteredExpenses.insert(expenseIndex, exp);
-        });
-      })),);
+      SnackBar(
+          content: const Text('Expense deleted'),
+          duration: const Duration(seconds: 3),
+          action: SnackBarAction(
+              label: 'Undo',
+              onPressed: () {
+                setState(() {
+                  _regiesteredExpenses.insert(expenseIndex, exp);
+                });
+              })),
+    );
   }
 
   void _openAddExpenseOverlay() {
@@ -72,10 +77,17 @@ class _ExpensesState extends State<Expenses> {
         ),
         Text(
           'No expenses found.',
-          style: Theme.of(context).textTheme.titleLarge!.copyWith(fontSize: 30,),
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                fontSize: 30,
+              ),
         ),
-        Text('Start tracking your Expenses, NOW !!,',
-        style: Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.normal,fontSize: 20),),
+        Text(
+          'Start tracking your Expenses, NOW !!,',
+          style: Theme.of(context)
+              .textTheme
+              .titleLarge!
+              .copyWith(fontWeight: FontWeight.normal, fontSize: 20),
+        ),
       ],
     );
 
@@ -87,18 +99,23 @@ class _ExpensesState extends State<Expenses> {
             icon: const Icon(Icons.add),
           )
         ],
-        title: Text('Your Expense Tracker',style: Theme.of(context).appBarTheme.titleTextStyle,),
+        title: Text(
+          'Budget Buddy',
+          style: Theme.of(context).appBarTheme.titleTextStyle,
+        ),
       ),
       body: Column(
-        children: 
-          (_regiesteredExpenses.isEmpty)
-              ? [content]
-              : [const Text('the chart'),Expanded(
+        children: (_regiesteredExpenses.isEmpty)
+            ? [content]
+            : [
+                Chart(_regiesteredExpenses),
+                Expanded(
                   child: ExpensesList(
-                  expenses: _regiesteredExpenses,
-                  onRemovedExpense: _removeExpense,
-                )),
-              ]
+                    expenses: _regiesteredExpenses,
+                    onRemovedExpense: _removeExpense,
+                  ),
+                ),
+              ],
       ),
     );
   }

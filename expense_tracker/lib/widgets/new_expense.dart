@@ -84,7 +84,8 @@ class _NewExpense extends State<NewExpense> {
             controller: _titleController,
             keyboardType: TextInputType.text,
             maxLength: 50,
-            decoration: const InputDecoration(label: Text('Title')),
+            decoration: InputDecoration(label: Text('Title',style: Theme.of(context).textTheme.titleLarge),),
+            style: Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.normal),
           ),
           Row(
             children: [
@@ -92,10 +93,12 @@ class _NewExpense extends State<NewExpense> {
                 child: TextField(
                   controller: _amtController,
                   keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    label: Text('Amount'),
+                  decoration: InputDecoration(
+                    label: Text('Amount',style: Theme.of(context).textTheme.titleLarge),
                     prefixText: '₹ ',
+                    prefixStyle:Theme.of(context).textTheme.titleLarge,
                   ),
+                  style: Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.normal),
                 ),
               ),
               const SizedBox(width: 20),

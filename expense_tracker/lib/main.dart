@@ -16,7 +16,7 @@ void main() {
       darkTheme: ThemeData.dark().copyWith(useMaterial3: true,
       colorScheme: kDarkColorScheme,
         appBarTheme: const AppBarTheme().copyWith(
-          titleTextStyle: const TextStyle(fontWeight: FontWeight.bold,fontSize: 30),
+          titleTextStyle: const TextStyle(fontWeight: FontWeight.bold,fontSize: 28),
           backgroundColor: kDarkColorScheme.primaryContainer,
           foregroundColor: kDarkColorScheme.onPrimaryContainer,
         ),
@@ -32,9 +32,8 @@ void main() {
           foregroundColor: kDarkColorScheme.onPrimaryContainer
         ),),
         textTheme: ThemeData().textTheme.copyWith(
-          titleLarge: TextStyle(
+          titleLarge: const TextStyle(
             fontWeight: FontWeight.bold,
-            color: kDarkColorScheme.onSecondaryContainer,
             fontSize: 16,
           ),
         ),),
