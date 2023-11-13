@@ -1,3 +1,4 @@
+import 'package:expense_tracker/data/storage.dart';
 import 'package:flutter/material.dart';
 import 'package:expense_tracker/widgets/expenses.dart';
 
@@ -7,10 +8,14 @@ var kColorScheme =
 
 var kDarkColorScheme =
     ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 0, 255, 200),brightness: Brightness.dark);
+late ObjectBox objectbox;
 
 
+Future<void> main() async {
+   WidgetsFlutterBinding.ensureInitialized();
 
-void main() {
+  objectbox = await ObjectBox.create();
+
   runApp(
     MaterialApp(
       darkTheme: ThemeData.dark().copyWith(useMaterial3: true,

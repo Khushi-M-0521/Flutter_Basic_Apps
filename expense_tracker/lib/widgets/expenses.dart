@@ -3,6 +3,10 @@ import 'package:expense_tracker/widgets/expenses_list/expenses_list.dart';
 import 'package:expense_tracker/models/expense.dart';
 import 'package:expense_tracker/widgets/new_expense.dart';
 import 'package:flutter/material.dart';
+import 'package:expense_tracker/main.dart';
+
+
+final expensebox=objectbox.store.box<Expense>() ;
 
 class Expenses extends StatefulWidget {
   const Expenses({super.key});
@@ -14,24 +18,29 @@ class Expenses extends StatefulWidget {
 }
 
 class _ExpensesState extends State<Expenses> {
-  final List<Expense> _regiesteredExpenses = [
-    Expense(
-      title: 'Flutter course',
-      amount: 449.99,
-      date: DateTime.now(),
-      category: Category.work,
-    ),
-    Expense(
-      title: 'Cinema',
-      amount: 600,
-      date: DateTime.now(),
-      category: Category.leisure,
-    )
-  ];
+  
+
+  List<Expense> _regiesteredExpenses =[];
+
+
+  @override
+  void initState(){
+    super.initState();
+    _regiesteredExpenses =expensebox.getAll();
+    _regiesteredExpenses==[]?_regiesteredExpenses:_regiesteredExpenses.sort(descendDate);
+
+  }
+
+  int descendDate(Expense exp1,Expense exp2){
+    return exp1.date.isAtSameMomentAs(exp2.date)?0: 
+            exp1.date.isAfter(exp2.date)?-1:1;
+  }
 
   void addNewExpense(Expense exp) {
     setState(() {
       _regiesteredExpenses.add(exp);
+      _regiesteredExpenses.sort(descendDate);
+      expensebox.put(exp);
     });
   }
 
@@ -39,6 +48,7 @@ class _ExpensesState extends State<Expenses> {
     final expenseIndex = _regiesteredExpenses.indexOf(exp);
     setState(() {
       _regiesteredExpenses.remove(exp);
+      expensebox.remove(exp.id);
     });
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
@@ -50,6 +60,7 @@ class _ExpensesState extends State<Expenses> {
               onPressed: () {
                 setState(() {
                   _regiesteredExpenses.insert(expenseIndex, exp);
+                  expensebox.put(exp);
                 });
               })),
     );

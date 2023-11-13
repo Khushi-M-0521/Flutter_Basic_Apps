@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:objectbox/objectbox.dart';
 import 'package:uuid/uuid.dart';
 import 'package:intl/intl.dart';
 
@@ -14,20 +15,30 @@ const categoryIcons = {
   Category.work: Icons.book,
 };
 
+@Entity()
 class Expense {
-  final String id;
+  @Id()
+  int id=0;
   final String title;
   final double amount;
-  final DateTime date;
-  final Category category;
+  final int dbCategory;
 
+  @Property(type: PropertyType.date)
+  final DateTime date;
+
+  @Transient()
+  Category category;
+
+  
   Expense({
     required this.title,
     required this.amount,
     required this.date,
-    required this.category,
-  }) : id = uuid.v4();
+    required this.dbCategory,
+  }):category=Category.values[dbCategory];
 
+  
+  @Transient()
   String get formattedDate {
     return formatter.format(date);
   }

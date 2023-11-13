@@ -68,7 +68,7 @@ class _NewExpense extends State<NewExpense> {
       title: _titleController.text,
       amount: amt,
       date: _selectedDate!,
-      category: _selectedCategory,
+      dbCategory: _selectedCategory.index,
     );
     widget.addNewExpense(newExp);
     Navigator.pop(context);
