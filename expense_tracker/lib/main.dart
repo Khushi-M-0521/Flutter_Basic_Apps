@@ -1,7 +1,7 @@
 import 'package:expense_tracker/data/storage.dart';
 import 'package:flutter/material.dart';
 import 'package:expense_tracker/widgets/expenses.dart';
-
+import 'package:flutter/services.dart';
 
 var kColorScheme =
     ColorScheme.fromSeed(seedColor: const Color.fromARGB(166, 21, 0, 255));
@@ -12,11 +12,16 @@ late ObjectBox objectbox;
 
 
 Future<void> main() async {
-   WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
 
   objectbox = await ObjectBox.create();
 
-  runApp(
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]).then((fn) {
+
+    runApp(
     MaterialApp(
       darkTheme: ThemeData.dark().copyWith(useMaterial3: true,
       colorScheme: kDarkColorScheme,
@@ -72,4 +77,11 @@ Future<void> main() async {
       home: const Expenses(),
     ),
   );
+
+
+  });
+
+  
+
+  
 }
