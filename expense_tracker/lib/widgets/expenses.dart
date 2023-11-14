@@ -77,6 +77,8 @@ class _ExpensesState extends State<Expenses> {
 
   @override
   Widget build(BuildContext context) {
+    final width=MediaQuery.of(context).size.width;
+
     Widget content = Column(
       children: [
         Opacity(
@@ -115,10 +117,10 @@ class _ExpensesState extends State<Expenses> {
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
       ),
-      body: Column(
-        children: (_regiesteredExpenses.isEmpty)
-            ? [content]
-            : [
+      body:  (_regiesteredExpenses.isEmpty)
+            ? content
+            : width<600? Column(
+              children:[
                 Chart(_regiesteredExpenses),
                 Expanded(
                   child: ExpensesList(
@@ -127,6 +129,16 @@ class _ExpensesState extends State<Expenses> {
                   ),
                 ),
               ],
+      ): Row(
+        children: [
+                Expanded(child: Chart(_regiesteredExpenses)),
+                Expanded(
+                  child: ExpensesList(
+                    expenses: _regiesteredExpenses,
+                    onRemovedExpense: _removeExpense,
+                  ),
+                ),
+        ],
       ),
     );
   }

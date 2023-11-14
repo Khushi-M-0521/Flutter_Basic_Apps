@@ -76,91 +76,98 @@ class _NewExpense extends State<NewExpense> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        children: [
-          TextField(
-            controller: _titleController,
-            keyboardType: TextInputType.text,
-            maxLength: 50,
-            decoration: InputDecoration(label: Text('Title',style: Theme.of(context).textTheme.titleLarge),),
-            style: Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.normal),
-          ),
-          Row(
+    final keyboardSpace= MediaQuery.of(context).viewInsets.bottom;
+
+    return SizedBox(
+      height: double.infinity,
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(16,16,16,keyboardSpace+16),
+          child: Column(
             children: [
-              Expanded(
-                child: TextField(
-                  controller: _amtController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    label: Text('Amount',style: Theme.of(context).textTheme.titleLarge),
-                    prefixText: '₹ ',
-                    prefixStyle:Theme.of(context).textTheme.titleLarge,
-                  ),
-                  style: Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.normal),
-                ),
+              TextField(
+                controller: _titleController,
+                keyboardType: TextInputType.text,
+                maxLength: 50,
+                decoration: InputDecoration(label: Text('Title',style: Theme.of(context).textTheme.titleLarge),),
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.normal),
               ),
-              const SizedBox(width: 20),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      _selectedDate == null
-                          ? 'No Selected Date'
-                          : formatter.format(_selectedDate!),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: _amtController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        label: Text('Amount',style: Theme.of(context).textTheme.titleLarge),
+                        prefixText: '₹ ',
+                        prefixStyle:Theme.of(context).textTheme.titleLarge,
+                      ),
                       style: Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.normal),
                     ),
-                    IconButton(
-                      onPressed: _presentDatePicker,
-                      icon: const Icon(
-                        Icons.calendar_month,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 15),
-          Row(
-            children: [
-              DropdownButton(
-                value: _selectedCategory,
-                items: Category.values
-                    .map(
-                      (category) => DropdownMenuItem(
-                        value: category,
-                        child: Text(
-                          category.name.toUpperCase(),
+                  ),
+                  const SizedBox(width: 20),
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          _selectedDate == null
+                              ? 'No Selected Date'
+                              : formatter.format(_selectedDate!),
                           style: Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.normal),
                         ),
-                      ),
-                    )
-                    .toList(),
-                onChanged: (value) {
-                  if (value == null) {
-                    return;
-                  }
-                  setState(() {
-                    _selectedCategory = value;
-                  });
-                },
+                        IconButton(
+                          onPressed: _presentDatePicker,
+                          icon: const Icon(
+                            Icons.calendar_month,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              const Spacer(),
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('Cancel'),
-              ),
-              ElevatedButton(
-                  onPressed: _submitExpense, child: const Text('Save Expense'))
+              const SizedBox(height: 15),
+              Row(
+                children: [
+                  DropdownButton(
+                    value: _selectedCategory,
+                    items: Category.values
+                        .map(
+                          (category) => DropdownMenuItem(
+                            value: category,
+                            child: Text(
+                              category.name.toUpperCase(),
+                              style: Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.normal),
+                            ),
+                          ),
+                        )
+                        .toList(),
+                    onChanged: (value) {
+                      if (value == null) {
+                        return;
+                      }
+                      setState(() {
+                        _selectedCategory = value;
+                      });
+                    },
+                  ),
+                  const Spacer(),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Cancel'),
+                  ),
+                  ElevatedButton(
+                      onPressed: _submitExpense, child: const Text('Save Expense'))
+                ],
+              )
             ],
-          )
-        ],
+          ),
+        ),
       ),
     );
   }

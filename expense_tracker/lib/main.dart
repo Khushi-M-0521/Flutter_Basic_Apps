@@ -16,16 +16,17 @@ Future<void> main() async {
 
   objectbox = await ObjectBox.create();
 
-  WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-  ]).then((fn) {
+  // WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setPreferredOrientations([
+  //   DeviceOrientation.portraitUp,
+  // ]).then((fn) {
 
     runApp(
     MaterialApp(
       darkTheme: ThemeData.dark().copyWith(useMaterial3: true,
       colorScheme: kDarkColorScheme,
         appBarTheme: const AppBarTheme().copyWith(
+          centerTitle: true,
           titleTextStyle: const TextStyle(fontWeight: FontWeight.bold,fontSize: 28),
           backgroundColor: kDarkColorScheme.primaryContainer,
           foregroundColor: kDarkColorScheme.onPrimaryContainer,
@@ -51,6 +52,8 @@ Future<void> main() async {
         useMaterial3: true,
         colorScheme: kColorScheme,
         appBarTheme: const AppBarTheme().copyWith(
+          centerTitle: true,
+          titleTextStyle: const TextStyle(fontWeight: FontWeight.bold,fontSize: 28),
           backgroundColor: kColorScheme.onPrimaryContainer,
           foregroundColor: kColorScheme.primaryContainer,
         ),
@@ -79,7 +82,7 @@ Future<void> main() async {
   );
 
 
-  });
+  // });
 
   
 
