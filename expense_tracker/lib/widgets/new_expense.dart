@@ -16,7 +16,7 @@ class NewExpense extends StatefulWidget {
 class _NewExpense extends State<NewExpense> {
   final _titleController = TextEditingController();
   final _amtController = TextEditingController();
-  DateTime? _selectedDate;
+  DateTime _selectedDate= DateTime.now();
   Category _selectedCategory = Category.work;
 
   @override
@@ -36,7 +36,7 @@ class _NewExpense extends State<NewExpense> {
       lastDate: now,
     );
     setState(() {
-      _selectedDate = pickedDate;
+      _selectedDate = pickedDate??DateTime.now();
     });
   }
 
@@ -44,14 +44,13 @@ class _NewExpense extends State<NewExpense> {
     final amt = double.tryParse(_amtController.text);
     final isValidAmt = amt == null || amt <= 0;
     if (_titleController.text.trim().isEmpty ||
-        isValidAmt ||
-        _selectedDate == null) {
+        isValidAmt ) {
       showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
           title: const Text('Invalid Expense'),
           content: const Text(
-              'Please enter a valid title, amount, data and category'),
+              'Please enter a valid title, amount and category'),
           actions: [
             TextButton(
               onPressed: () {
@@ -67,7 +66,7 @@ class _NewExpense extends State<NewExpense> {
     final newExp = Expense(
       title: _titleController.text,
       amount: amt,
-      date: _selectedDate!,
+      date: _selectedDate,
       dbCategory: _selectedCategory.index,
     );
     widget.addNewExpense(newExp);
@@ -112,10 +111,7 @@ class _NewExpense extends State<NewExpense> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
-                          _selectedDate == null
-                              ? 'No Selected Date'
-                              : formatter.format(_selectedDate!),
+                        Text( formatter.format(_selectedDate),
                           style: Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.normal),
                         ),
                         IconButton(

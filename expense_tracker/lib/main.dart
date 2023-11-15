@@ -1,7 +1,7 @@
 import 'package:expense_tracker/data/storage.dart';
+import 'package:expense_tracker/widgets/splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:expense_tracker/widgets/expenses.dart';
-import 'package:flutter/services.dart';
+//import 'package:flutter/services.dart';
 
 var kColorScheme =
     ColorScheme.fromSeed(seedColor: const Color.fromARGB(166, 21, 0, 255));
@@ -77,7 +77,7 @@ Future<void> main() async {
       ),
       debugShowCheckedModeBanner: false,
       //themeMode: ThemeMode.system, default
-      home: const Expenses(),
+      home: const SplashScreen(),
     ),
   );
 
