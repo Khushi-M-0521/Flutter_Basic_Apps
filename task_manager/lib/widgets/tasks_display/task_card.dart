@@ -13,7 +13,7 @@ class _TaskCard extends State<TaskCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.all(1),
+      margin: const EdgeInsets.all(1),
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
@@ -32,14 +32,12 @@ class _TaskCard extends State<TaskCard> {
             ),
             const SizedBox(
               width: double.infinity,
-              child: Expanded(
-                child: Text(
-                  'Description...........................................................................................................................',
-                  maxLines: 4,
-                  overflow: TextOverflow.ellipsis,
-                  softWrap: true,
-                  textWidthBasis: TextWidthBasis.parent,
-                ),
+              child: Text(
+                'Description...........................................................................................................................',
+                maxLines: 4,
+                overflow: TextOverflow.ellipsis,
+                softWrap: true,
+                textWidthBasis: TextWidthBasis.parent,
               ),
             ),
             
