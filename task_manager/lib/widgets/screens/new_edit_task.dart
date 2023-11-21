@@ -22,7 +22,7 @@ class _NewEditTask extends State<NewEditTask> {
   DateTime _assignedTime = DateTime.now();
   DateTime _dueTime = DateTime.now().add(const Duration(days: 1));
   Category? _category;
-  final List<Category> _allcategory=categoryBox.getAll();
+  final List<Category> _allcategory = categoryBox.getAll();
 
   void getAssignedDateTime() async {
     final initialDate = _assignedTime;
@@ -55,21 +55,22 @@ class _NewEditTask extends State<NewEditTask> {
     });
   }
 
-  void addCategory(){
-    if(_addCatergoryController!.text.isEmpty){
+  void addCategory() {
+    if (_addCatergoryController!.text.isEmpty) {
       showDialog(
-        context: context,
-        builder:(ctx) => AlertDialog(
-          title: const Text('Category Name not found'),
-          actions: [
-            ElevatedButton(onPressed: (){
-              Navigator.pop(ctx);
-            }, 
-            child: const Text('Okay'))
-          ],)
-      );
+          context: context,
+          builder: (ctx) => AlertDialog(
+                title: const Text('Category Name not found'),
+                actions: [
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(ctx);
+                      },
+                      child: const Text('Okay'))
+                ],
+              ));
     }
-    final newCategory=Category(_addCatergoryController!.text);
+    final newCategory = Category(_addCatergoryController!.text);
     categoryBox.put(newCategory);
     setState(() {
       _allcategory.add(newCategory);
@@ -77,95 +78,93 @@ class _NewEditTask extends State<NewEditTask> {
   }
 
   void addCategoryDialog() {
-    _addCatergoryController=TextEditingController();
+    _addCatergoryController = TextEditingController();
     showDialog(
-      context: context, 
-      builder: (ctx) { 
-        return Dialog(
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text('Add Catergory'),
-                const SizedBox(height: 15),
-                TextField(
-                  controller: _addCatergoryController,
-                  maxLength: 15,
-                  decoration: const InputDecoration(labelText: 'Name',hintText: 'generally a word'),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(
-                      onPressed: (){
-                        Navigator.pop(ctx);
-                      }, 
-                      child: const Text('Cancel'),
-                    ),
-                    TextButton(onPressed: (){}, child: const Text('Manage')),
-                    ElevatedButton(
-                      onPressed: (){
-                        addCategory();
-                        Navigator.pop(ctx);
-                      },
-                      child: const Text('Save'),
-                    )
-                  ],
-                ),
-              ],
+        context: context,
+        builder: (ctx) {
+          return Dialog(
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text('Add Catergory'),
+                  const SizedBox(height: 15),
+                  TextField(
+                    controller: _addCatergoryController,
+                    maxLength: 15,
+                    decoration: const InputDecoration(
+                        labelText: 'Name', hintText: 'generally a word'),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(ctx);
+                        },
+                        child: const Text('Cancel'),
+                      ),
+                      TextButton(onPressed: () {}, child: const Text('Manage')),
+                      ElevatedButton(
+                        onPressed: () {
+                          addCategory();
+                          Navigator.pop(ctx);
+                        },
+                        child: const Text('Save'),
+                      )
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-      );
-      }
-      );
+          );
+        });
   }
 
-  void saveTask(){
-    bool isValid=false;
+  void saveTask() {
+    bool isValid = false;
     String? errorTitle;
     String? errorDescription;
-    int? priority=int.tryParse(_priorityControlloer.text);
+    int? priority = int.tryParse(_priorityControlloer.text);
 
-    if(_titleController.text.isEmpty){
-      errorTitle='Empty Title';
-      errorDescription='A Task must have a title';
-    }
-    else if(priority==null || priority>=1){
-      errorTitle='Incorrect Priority';
-      errorDescription='A Task must have a priority, starting from 1 and above.\n Priority 1 is considered as highest priority';
-    }
-    else if(_category==null){
-      errorTitle='No Category';
-      errorDescription='Please choose or add the category of the task';
-    }
-    else{
-      isValid=true;
+    if (_titleController.text.isEmpty) {
+      errorTitle = 'Empty Title';
+      errorDescription = 'A Task must have a title';
+    } else if (priority == null || priority >= 1) {
+      errorTitle = 'Incorrect Priority';
+      errorDescription =
+          'A Task must have a priority, starting from 1 and above.\n Priority 1 is considered as highest priority';
+    } else if (_category == null) {
+      errorTitle = 'No Category';
+      errorDescription = 'Please choose or add the category of the task';
+    } else {
+      isValid = true;
     }
 
-    if(!isValid){
+    if (!isValid) {
       showDialog(
-        context: context, 
-        builder: (ctx) => AlertDialog(
-          title: Text(errorTitle!),
-          content: Text(errorDescription!),
-          actions: [
-            ElevatedButton(
-              onPressed: (){
-                Navigator.pop(ctx);
-              }, 
-              child: const Text('Okay'))
-          ],
-        ));
-        return;
+          context: context,
+          builder: (ctx) => AlertDialog(
+                title: Text(errorTitle!),
+                content: Text(errorDescription!),
+                actions: [
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(ctx);
+                      },
+                      child: const Text('Okay'))
+                ],
+              ));
+      return;
     }
-    final newTask=Task(
-      title: _titleController.text, 
-      priority: priority!, 
-      categoryId: _category!.id, 
-      assignedDate: _assignedTime, 
-      dueDate: _dueTime, 
-      isDone: false);
+    final newTask = Task(
+        title: _titleController.text,
+        priority: priority!,
+        categoryId: _category!.id,
+        assignedDate: _assignedTime,
+        dueDate: _dueTime,
+        isDone: false);
     widget._addOrEditTask(newTask);
     Navigator.pop(context);
   }
@@ -184,7 +183,7 @@ class _NewEditTask extends State<NewEditTask> {
     _titleController.dispose();
     _descriptionController.dispose();
     _priorityControlloer.dispose();
-    _addCatergoryController??_addCatergoryController!.dispose();
+    _addCatergoryController ?? _addCatergoryController!.dispose();
     super.dispose();
   }
 
@@ -232,8 +231,8 @@ class _NewEditTask extends State<NewEditTask> {
                         items: [
                           ..._allcategory.map((category) {
                             return DropdownMenuItem(
-                              value: category,
-                              child: Text(category.category.toUpperCase()));
+                                value: category,
+                                child: Text(category.category.toUpperCase()));
                           }),
                           DropdownMenuItem(
                             value: ' ',
@@ -245,7 +244,8 @@ class _NewEditTask extends State<NewEditTask> {
                                   Text('Add Category'),
                                 ],
                               ),
-                            ),),
+                            ),
+                          ),
                         ],
                         // const [
                         //   DropdownMenuItem(
@@ -258,11 +258,10 @@ class _NewEditTask extends State<NewEditTask> {
                         //   ),
                         // ],
                         onChanged: (value) {
-                          if(value is Category){
+                          if (value is Category) {
                             setState(() {
-                            _category=value;  
+                              _category = value;
                             });
-                            
                           }
                         },
                       ),
