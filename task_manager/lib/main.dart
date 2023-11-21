@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:task_manager/data/store.dart';
 import 'package:task_manager/modals/constants.dart';
 import 'package:task_manager/widgets/screens/splash_screen.dart';
 
-void main() {
+late ObjectBox objectBox;
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  objectBox = await ObjectBox.create();
+  
   runApp(const TaskApp());
 }
 

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:task_manager/main.dart';
+import 'package:task_manager/modals/category.dart';
+import 'package:task_manager/modals/task.dart';
 
 const ColorScheme kLightColorScheme = ColorScheme(
   brightness: Brightness.light,
@@ -67,3 +71,11 @@ const ColorScheme kDarkColorScheme = ColorScheme(
   inversePrimary: Color(0xff775b0e),
   surfaceTint: Color(0xffffb300),
 );
+
+final taskBox = objectBox.store.box<Task>();
+final categoryBox = objectBox.store.box<Category>();
+
+final formatter = DateFormat.yMd();
+String formattedDate(DateTime date) {
+    return formatter.format(date);
+}
