@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:task_manager/modals/task.dart';
 import 'package:task_manager/widgets/tasks_display/task_card.dart';
 
 class TasksList extends StatelessWidget{
-  const TasksList({super.key});
+  const TasksList(this._tasks,{super.key, required this.removeTask});
+
+  final List<Task> _tasks;
+  final void Function(Task) removeTask;
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.builder(
-        itemCount: 1,
+        itemCount: _tasks.length,
         itemBuilder: (ctx,index)=>Dismissible(
           key: UniqueKey(),
           background: Container(
@@ -21,8 +25,8 @@ class TasksList extends StatelessWidget{
                   SizedBox(width: 15,),
                 ],
               ),),
-          onDismissed: (direction){},
-          child: const TaskCard(),
+          onDismissed: (direction){ removeTask(_tasks[index]); },
+          child: TaskCard(_tasks[index]),
         ),
       ),
     );

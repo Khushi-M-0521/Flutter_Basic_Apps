@@ -7,7 +7,10 @@ import 'package:task_manager/widgets/tasks_display/segregate_tasks.dart';
 import 'package:task_manager/widgets/tasks_display/task_list.dart';
 
 class TasksDisplay extends StatefulWidget {
-  const TasksDisplay({super.key});
+  const TasksDisplay(this._tasksToDisplay,{super.key,required this.removeTask});
+
+  final _tasksToDisplay;
+  final void Function(Task) removeTask;
 
   @override
   State<TasksDisplay> createState() {
@@ -16,7 +19,7 @@ class TasksDisplay extends StatefulWidget {
 }
 
 class _TasksDisplay extends State<TasksDisplay> {
-  List<Task> tasksToDisplay = taskBox.getAll();
+  late List<Task> _tasksToDisplay;
   DateTime _tasksOn = DateTime.now();
   DateTime _tasksFrom = DateTime.now().subtract(Duration(days: 1));
   DateTime _dueTasksOn = DateTime.now();
@@ -24,6 +27,12 @@ class _TasksDisplay extends State<TasksDisplay> {
   Category? _category;
   int _filterId=0;
   DateTime now=DateTime.now();
+
+  @override
+  void initState(){
+    super.initState();
+    _tasksToDisplay=widget._tasksToDisplay;
+  }
 
   Future _pickDateTime(
       {required initialDate,
@@ -61,42 +70,37 @@ class _TasksDisplay extends State<TasksDisplay> {
       case null:
         return;
       case 0:
-        print('0');
         setState(() {
           _filterId=0;    
         });
       case 1:
-        print('1');
         setState(() {
           _filterId=1;    
         });
       case 2:
-        print('2');
         setState(() {
           _filterId=2;    
         });
       case 3:
-        print('3');
         setState(() {
           _filterId=3;    
         });
       case 4:
-        print('4');
         setState(() {
           _filterId=4;    
         });
       case 5:
-        print('5');
         setState(() {
           _filterId=5;    
         });
       case 6:
-        print('6');
         setState(() {
           _filterId=6;    
         });
     }
   }
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -124,7 +128,7 @@ class _TasksDisplay extends State<TasksDisplay> {
             const SizedBox(
               height: 20,
             ),
-            const TasksList(),
+            TasksList(_tasksToDisplay, removeTask: widget.removeTask,),
           ],
         ),
       ),

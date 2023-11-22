@@ -44,12 +44,15 @@ class _NewEditTask extends State<NewEditTask> {
     final initialDate = _dueTime;
     final firstDate = _assignedTime;
     final lastDate = DateTime(_dueTime.year + 1, _dueTime.month, _dueTime.day);
-    final pickedTime = await showDatePicker(
+    DateTime? pickedTime = await showDatePicker(
       context: context,
       initialDate: initialDate,
       firstDate: firstDate,
       lastDate: lastDate,
     );
+    if(pickedTime!=null){
+    pickedTime=pickedTime.add(const Duration(hours: 23, minutes: 59,seconds: 59));
+    }
     setState(() {
       _dueTime = pickedTime ?? DateTime.now();
     });
@@ -131,7 +134,7 @@ class _NewEditTask extends State<NewEditTask> {
     if (_titleController.text.isEmpty) {
       errorTitle = 'Empty Title';
       errorDescription = 'A Task must have a title';
-    } else if (priority == null || priority >= 1) {
+    } else if (priority == null || priority < 1) {
       errorTitle = 'Incorrect Priority';
       errorDescription =
           'A Task must have a priority, starting from 1 and above.\n Priority 1 is considered as highest priority';
@@ -160,6 +163,7 @@ class _NewEditTask extends State<NewEditTask> {
     }
     final newTask = Task(
         title: _titleController.text,
+        description: _descriptionController.text,
         priority: priority!,
         categoryId: _category!.id,
         assignedDate: _assignedTime,

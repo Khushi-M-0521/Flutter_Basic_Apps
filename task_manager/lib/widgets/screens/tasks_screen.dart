@@ -15,10 +15,20 @@ class TasksScreen extends StatefulWidget {
 }
 
 class _TasksScreen extends State<TasksScreen>{
-  
+  final List<Task> _tasksToDisplay = taskBox.getAll();
 
   void _addOrEditTask(Task task){
     taskBox.put(task);
+    setState(() {
+      _tasksToDisplay.add(task);
+    });
+  }
+
+  void _removeTask(Task task){
+    taskBox.remove(task.id);
+    setState(() {
+      _tasksToDisplay.remove(task);
+    });
   }
 
   void _openAddTaskOverlay(context) {
@@ -40,12 +50,12 @@ class _TasksScreen extends State<TasksScreen>{
         actions: [
           IconButton(
               onPressed: () {
-                _openAddTaskOverlay(context);
+                  _openAddTaskOverlay(context);
               },
               icon: const Icon(Icons.add_task_outlined)),
         ],
       ),
-      body: const TasksDisplay(),
+      body: TasksDisplay(_tasksToDisplay,key:UniqueKey(), removeTask: _removeTask,),
     );
   }
 }

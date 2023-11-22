@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:task_manager/modals/constants.dart';
+import 'package:task_manager/modals/task.dart';
 
 class TaskCard extends StatefulWidget {
-  const TaskCard({super.key});
+  const TaskCard(this.task,{super.key});
+
+  final Task task;
 
   @override
   State<TaskCard> createState() {
@@ -10,10 +14,33 @@ class TaskCard extends StatefulWidget {
 }
 
 class _TaskCard extends State<TaskCard> {
+  
   @override
   Widget build(BuildContext context) {
+    Task task=widget.task;
+    DateTime now=DateTime.now();
+    String timeleft='';
+    if(now.isBefore(task.dueDate)){
+      Duration left=task.dueDate.difference(now);
+      if(left.inDays!=0){
+      timeleft='${left.inDays} days ';
+      }
+      else if(left.inHours!=0){
+        timeleft='${left.inHours} hrs. ';
+      }
+      else if(left.inDays!=0){
+        timeleft='${left.inMinutes} mins.';
+      }
+      else{
+        timeleft='passed';
+      }
+    }
+    else{
+      timeleft='passed';
+    }
+    
     return Card(
-      margin: const EdgeInsets.all(1),
+      margin: const EdgeInsets.all(5),
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
@@ -21,19 +48,23 @@ class _TaskCard extends State<TaskCard> {
           children: [
             Row(
               children: [
-                Checkbox(value: false, onChanged: (ischeck) {}),
+                Checkbox(value: task.isDone, onChanged: (isCheck) {
+                  setState(() {
+                    task.isDone=isCheck??task.isDone;
+                  });
+                }),
                 const Spacer(),
-                const Text('Title'),
+                Text(task.title),
                 const Spacer(),
                 const CircleAvatar(
                   child: Icon(Icons.edit),
                 ),
               ],
             ),
-            const SizedBox(
+            SizedBox(
               width: double.infinity,
               child: Text(
-                'Description...........................................................................................................................',
+                task.description??' ',
                 maxLines: 4,
                 overflow: TextOverflow.ellipsis,
                 softWrap: true,
@@ -42,19 +73,19 @@ class _TaskCard extends State<TaskCard> {
             ),
             
             const SizedBox(height: 4),
-            const Row(
+            Row(
               children: [
-                Text('Assigned on: .........'),
-                Spacer(),
-                Text('Due on: ..........'),
+                Text('Assigned on: ${formattedDate(task.assignedDate)}'),
+                const Spacer(),
+                Text('Due on: ${formattedDate(task.dueDate)}'),
               ],
             ),
             const SizedBox(height: 4),
-            const Row(
+            Row(
               children: [
-                Text('Category: .....'),
-                Spacer(),
-                Text('Time left: .........'),
+                Text('Category: ${task.category.category.toUpperCase()}'),
+                const Spacer(),
+                Text('Time left: $timeleft'),
               ],
             ),
           ],
