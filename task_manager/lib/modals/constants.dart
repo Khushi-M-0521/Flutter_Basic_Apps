@@ -75,7 +75,9 @@ const ColorScheme kDarkColorScheme = ColorScheme(
 final taskBox = objectBox.store.box<Task>();
 final categoryBox = objectBox.store.box<Category>();
 
-final formatter = DateFormat.yMd();
+final formatter = DateFormat.yM();
+final dayFormatter = DateFormat.d();
 String formattedDate(DateTime date) {
-    return formatter.format(date);
+    print('${dayFormatter.format(date)}/${formatter.format(date)}');
+    return '${dayFormatter.format(date)}/${formatter.format(date)}';
 }

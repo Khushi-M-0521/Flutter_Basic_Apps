@@ -183,7 +183,9 @@ class _NewEditTask extends State<NewEditTask> {
     _titleController.dispose();
     _descriptionController.dispose();
     _priorityControlloer.dispose();
-    _addCatergoryController ?? _addCatergoryController!.dispose();
+    if(_addCatergoryController!=null){
+      _addCatergoryController!.dispose();
+    }
     super.dispose();
   }
 

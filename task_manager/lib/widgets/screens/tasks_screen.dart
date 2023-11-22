@@ -19,7 +19,6 @@ class _TasksScreen extends State<TasksScreen>{
 
   void _addOrEditTask(Task task){
     taskBox.put(task);
-    print(task);
   }
 
   void _openAddTaskOverlay(context) {
