@@ -22,7 +22,7 @@ class TasksDisplay extends StatefulWidget {
 
   List<Task> _tasksToDisplay;
   final void Function(Task) removeTask;
-  final void Function() filterAllTasks;
+  final List<Task> Function() filterAllTasks;
   final List<Task> Function(DateTime) filterTasksOn;
   final List<Task> Function(DateTime) filterTasksFrom;
   final List<Task> Function(DateTime) filterDueTasksOn;
@@ -88,7 +88,8 @@ class _TasksDisplay extends State<TasksDisplay> {
       case 0:
         widget.filterAllTasks();
         setState(() {
-          _filterId=0;    
+          _filterId=0;
+          widget._tasksToDisplay=widget.filterAllTasks();    
         });
       case 1:
         setState(() {

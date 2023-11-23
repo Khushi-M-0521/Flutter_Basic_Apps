@@ -31,10 +31,9 @@ class _TasksScreen extends State<TasksScreen> {
     });
   }
 
-  void _filterAllTasks() {
-    setState(() {
+  List<Task> _filterAllTasks() {
       _tasksToDisplay = taskBox.getAll();
-    });
+      return _tasksToDisplay;
   }
 
   List<Task> _filterTasksOn(DateTime date) {
