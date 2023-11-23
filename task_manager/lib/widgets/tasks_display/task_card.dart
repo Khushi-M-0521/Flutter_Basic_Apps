@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_manager/data/store.dart';
 import 'package:task_manager/modals/constants.dart';
 import 'package:task_manager/modals/task.dart';
 
@@ -49,8 +50,10 @@ class _TaskCard extends State<TaskCard> {
             Row(
               children: [
                 Checkbox(value: task.isDone, onChanged: (isCheck) {
+                  taskBox.remove(task.id);
                   setState(() {
                     task.isDone=isCheck??task.isDone;
+                    taskBox.put(task);
                   });
                 }),
                 const Spacer(),

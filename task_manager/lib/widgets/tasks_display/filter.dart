@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_manager/data/store.dart';
 import 'package:task_manager/modals/category.dart';
 import 'package:task_manager/modals/constants.dart';
 
@@ -48,72 +49,23 @@ class Filter extends StatelessWidget {
             ),
             DropdownMenuItem(
               value: 1,
-              child: Row(
-                children: [
-                  Text('Tasks on: ${formattedDate(tasksOn)}'),
-                  IconButton(
-                      onPressed: () {
-                        pickedDate(
-                          initialDate: tasksOn,
-                          who: 1,
-                        );
-                        
-                      },
-                      icon: calender),
-                ],
-              ),
+              child: Text('Tasks on: ${formattedDate(tasksOn)}'),
             ),
             DropdownMenuItem(
               value: 2,
-              child: Row(
-                children: [
-                  Text('Tasks from: ${formattedDate(tasksFrom)}'),
-                  IconButton(
-                      onPressed: () {
-                        pickedDate(
-                          initialDate: tasksFrom,
-                          who: 2,
-                        );
-                      },
-                      icon: calender),
-                ],
-              ),
+              child: Text('Tasks from: ${formattedDate(tasksFrom)}'),
             ),
             DropdownMenuItem(
               value: 3,
-              child: Row(
-                children: [
-                  Text('Due tasks on: ${formattedDate(dueTasksOn)}'),
-                  IconButton(
-                      onPressed: () {
-                        pickedDate(
-                          initialDate: dueTasksOn,
-                          who: 3,
-                        );
-                      },
-                      icon: calender),
-                ],
-              ),
+              child: Text('Due tasks on: ${formattedDate(dueTasksOn)}'),
             ),
             DropdownMenuItem(
               value: 4,
-              child: Row(
-                children: [
-                  Text('Due tasks till: ${formattedDate(dueTasksTill)}'),
-                  IconButton(
-                      onPressed: () {
-                        pickedDate(
-                          initialDate: dueTasksTill,
-                          who: 4,
-                        );
-                      },
-                      icon: calender),
-                ],
-              ),
+              child: Text('Due tasks till: ${formattedDate(dueTasksTill)}'),
             ),
             const DropdownMenuItem(
               value: 5,
-              child: Text('Delayed tasks: '),
+              child: Text('Delayed tasks'),
             ),
             DropdownMenuItem(
               value: 6,
@@ -121,17 +73,56 @@ class Filter extends StatelessWidget {
                 children: [
                   const Text('Caterogized as: '),
                   DropdownButton(
-                      value: category==null?_allcategory[0].id : category!.id,
-                      items: _allcategory.map((ctg) => DropdownMenuItem(
-                              value: ctg.id, child: Text(ctg.category)))
-                          .toList(),
-                      onChanged: (ctgId){ setCategory(ctgId); }),
+                    value: category == null ? _allcategory[0].id : category!.id,
+                    items: _allcategory
+                        .map((ctg) => DropdownMenuItem(
+                            value: ctg.id, child: Text(ctg.category)))
+                        .toList(),
+                    onChanged: (ctgId) {
+                      setCategory(ctgId);
+                    },
+                  ),
                 ],
               ),
             ),
           ],
-          onChanged: (fltId) { setFilter(fltId); },
-        )
+          onChanged: (fltId) {
+            setFilter(fltId);
+          },
+        ),
+        IconButton(
+          disabledColor: const Color.fromARGB(0, 255, 255, 255),
+          onPressed:(filterId==0 || filterId==5 || filterId==6)?null: (){
+            if(filterId==1){
+              pickedDate(
+                initialDate: tasksOn,
+                who: 1,
+              );
+              return;
+            }
+            if(filterId==2){
+              pickedDate(
+                initialDate: tasksFrom,
+                who: 2,
+              );
+              return;
+            }
+            if(filterId==3){
+              pickedDate(
+                initialDate: dueTasksOn,
+                who: 3,
+              );
+              return;
+            }
+            if(filterId==4){
+              pickedDate(
+                initialDate: dueTasksTill,
+                who: 4,
+              );
+              return;
+            }
+          }, 
+          icon: calender),
       ],
     );
   }
