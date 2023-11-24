@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:task_manager/data/store.dart';
 import 'package:task_manager/modals/category.dart';
+import 'package:task_manager/modals/constants.dart';
 import 'package:task_manager/modals/task.dart';
 import 'package:task_manager/widgets/tasks_display/filter.dart';
 import 'package:task_manager/widgets/tasks_display/segregate_tasks.dart';
@@ -44,6 +45,8 @@ class _TasksDisplay extends State<TasksDisplay> {
   Category? _category;
   int _filterId=0;
   DateTime now=DateTime.now();
+  late List<Task> _segregatedTasks;
+  bool _isSegregated=false;
 
   Future _pickDateTime(
       {required initialDate,
@@ -77,6 +80,7 @@ class _TasksDisplay extends State<TasksDisplay> {
     setState(() {
       _category=categoryBox.get(ctgId!);
       widget._tasksToDisplay=widget.filterCategory(_category!.id);
+      _isSegregated=false;
     });
     
   }
@@ -89,50 +93,82 @@ class _TasksDisplay extends State<TasksDisplay> {
         widget.filterAllTasks();
         setState(() {
           _filterId=0;
-          widget._tasksToDisplay=widget.filterAllTasks();    
+          widget._tasksToDisplay=widget.filterAllTasks(); 
+          _isSegregated=false;  
         });
       case 1:
         setState(() {
           _filterId=1; 
           widget._tasksToDisplay=widget.filterTasksOn(_tasksOn);
+          _isSegregated=false;
         });
         
       case 2:
         setState(() {
           _filterId=2;   
           widget._tasksToDisplay=widget.filterTasksFrom(_tasksFrom); 
+          _isSegregated=false;
         });
       case 3:
         setState(() {
           _filterId=3;   
           widget._tasksToDisplay=widget.filterDueTasksOn(_dueTasksOn); 
+          _isSegregated=false;
         });
       case 4:
         setState(() {
           _filterId=4;    
           widget._tasksToDisplay=widget.filterDueTasksTill(_dueTasksTill);
+          _isSegregated=false;
         });
       case 5:
         setState(() {
           _filterId=5;  
           widget._tasksToDisplay=widget.filterDelayed();  
+          _isSegregated=false;
         });
       case 6:
         setState(() {
-          _filterId=6;  
-          print('aah reha');
+          _filterId=6; 
           if(_category!=null){ 
-          print('ok');
           widget._tasksToDisplay=widget.filterCategory(_category!.id); 
           }
+          _isSegregated=false;
         });
     }
   }
 
-  
+  void _segregateComplete() {
+    setState(() {
+     _segregatedTasks = widget._tasksToDisplay.where((task) => task.isDone).toList();
+    _isSegregated=true; 
+    });
+  }
+
+  void _segregateIncomplete() {
+    setState(() {
+      _segregatedTasks = widget._tasksToDisplay.where((task) => !task.isDone).toList();
+    _isSegregated=true;
+    });
+  }
+
+  void _removeSegregation(){
+    setState(() {
+      _isSegregated=false;
+    });
+  }
+
+  int get completedTasks{
+    return widget._tasksToDisplay.where((task) => task.isDone).toList().length;
+  }
+
+  int get incompletedTasks{
+    return widget._tasksToDisplay.where((task) => !task.isDone).toList().length;
+  }
 
   @override
   Widget build(BuildContext context) {
+    (_isSegregated?_segregatedTasks:widget._tasksToDisplay).sort((task1, task2) => sortTasks(task1, task2),);
     return Center(
       child: Container(
         padding: const EdgeInsets.all(5),
@@ -154,11 +190,19 @@ class _TasksDisplay extends State<TasksDisplay> {
             const SizedBox(
               height: 20,
             ),
-            const SegregateTasks(),
+            SegregateTasks(
+              completedTasks: completedTasks, 
+              incompletedTasks: incompletedTasks, 
+              segregateCompleted: _segregateComplete, 
+              segregateIncompleted: _segregateIncomplete, 
+              removeSegregation: _removeSegregation,
+            ),
             const SizedBox(
               height: 20,
             ),
-            TasksList(widget._tasksToDisplay, removeTask: widget.removeTask,),
+            TasksList(
+              _isSegregated?_segregatedTasks:widget._tasksToDisplay, 
+              removeTask: widget.removeTask,),
           ],
         ),
       ),

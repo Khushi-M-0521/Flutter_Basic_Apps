@@ -32,8 +32,8 @@ class _TasksScreen extends State<TasksScreen> {
   }
 
   List<Task> _filterAllTasks() {
-      _tasksToDisplay = taskBox.getAll();
-      return _tasksToDisplay;
+    _tasksToDisplay = taskBox.getAll();
+    return _tasksToDisplay;
   }
 
   List<Task> _filterTasksOn(DateTime date) {
@@ -44,21 +44,26 @@ class _TasksScreen extends State<TasksScreen> {
   }
 
   List<Task> _filterTasksFrom(DateTime date) {
-    queryTasksFrom.param(Task_.assignedDate).value = date.millisecondsSinceEpoch;
+    queryTasksFrom.param(Task_.assignedDate).value =
+        date.millisecondsSinceEpoch;
     final tasks = queryTasksFrom.find();
     _tasksToDisplay = tasks;
     return _tasksToDisplay;
   }
 
   List<Task> _filterDueTasksOn(DateTime date) {
-    queryDueTasksOn.param(Task_.dueDate).value = date.add(const Duration(hours: 23, minutes: 59, seconds: 59)).millisecondsSinceEpoch;
+    queryDueTasksOn.param(Task_.dueDate).value = date
+        .add(const Duration(hours: 23, minutes: 59, seconds: 59))
+        .millisecondsSinceEpoch;
     final tasks = queryDueTasksOn.find();
     _tasksToDisplay = tasks;
     return _tasksToDisplay;
   }
 
   List<Task> _filterDueTasksTill(DateTime date) {
-    queryDueTasksTill.param(Task_.dueDate).value = date.add(const Duration(hours: 23, minutes: 59, seconds: 59)).millisecondsSinceEpoch;
+    queryDueTasksTill.param(Task_.dueDate).value = date
+        .add(const Duration(hours: 23, minutes: 59, seconds: 59))
+        .millisecondsSinceEpoch;
     final tasks = queryDueTasksTill.find();
     _tasksToDisplay = tasks;
     return _tasksToDisplay;
@@ -95,6 +100,12 @@ class _TasksScreen extends State<TasksScreen> {
         centerTitle: true,
         actions: [
           IconButton(
+            onPressed: () {
+              setState(() {});
+            },
+            icon: const Icon(Icons.replay_outlined),
+          ),
+          IconButton(
               onPressed: () {
                 _openAddTaskOverlay(context);
               },
@@ -104,13 +115,13 @@ class _TasksScreen extends State<TasksScreen> {
       body: TasksDisplay(
         _tasksToDisplay,
         key: UniqueKey(),
-        removeTask: _removeTask, 
-        filterAllTasks: _filterAllTasks, 
-        filterTasksOn: _filterTasksOn, 
-        filterTasksFrom: _filterTasksFrom, 
-        filterDueTasksOn: _filterDueTasksOn, 
-        filterDueTasksTill: _filterDueTasksTill, 
-        filterDelayed: _filterDelayed, 
+        removeTask: _removeTask,
+        filterAllTasks: _filterAllTasks,
+        filterTasksOn: _filterTasksOn,
+        filterTasksFrom: _filterTasksFrom,
+        filterDueTasksOn: _filterDueTasksOn,
+        filterDueTasksTill: _filterDueTasksTill,
+        filterDelayed: _filterDelayed,
         filterCategory: _filterCategory,
       ),
     );

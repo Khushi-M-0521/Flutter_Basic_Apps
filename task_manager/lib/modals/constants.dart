@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:task_manager/modals/task.dart';
 
 const ColorScheme kLightColorScheme = ColorScheme(
   brightness: Brightness.light,
@@ -76,3 +77,20 @@ final dayFormatter = DateFormat.d();
 String formattedDate(DateTime date) {
     return '${dayFormatter.format(date)}/${formatter.format(date)}';
 }
+
+int sortTasks(Task task1, Task task2){
+  if( task1.assignedDate.isBefore( task2.assignedDate )){
+    return 1;
+  }
+  if(task1.assignedDate.isAfter(task2.assignedDate) ){
+    return -1;
+  }
+  if(task1.priority>task2.priority){
+    return -1;
+  }
+  if(task1.priority<task2.priority){
+    return 1;
+  }
+  return 0;
+}
+
