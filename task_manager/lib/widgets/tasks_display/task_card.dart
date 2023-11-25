@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:task_manager/data/store.dart';
 import 'package:task_manager/modals/constants.dart';
 import 'package:task_manager/modals/task.dart';
+import 'package:task_manager/widgets/screens/new_edit_task.dart';
 
 class TaskCard extends StatefulWidget {
   const TaskCard(this.task,{super.key});
@@ -15,10 +16,43 @@ class TaskCard extends StatefulWidget {
 }
 
 class _TaskCard extends State<TaskCard> {
+  late Task task;
+
+  @override
+  void initState(){
+    super.initState();
+    task=widget.task;
+  }
+
+  void _openAddTaskOverlay(context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (ctx) => NewEditTask(
+        editTask,
+        editTitle: task.title,
+        editDescription: task.description,
+        editcategory: task.category,
+        editPriority: task.priority,
+        editAssignedDate: task.assignedDate,
+        editDueDate: task.dueDate,
+      ),
+      useSafeArea: true,
+      isScrollControlled: true,
+      //useRootNavigator: true,
+    );
+  }
+
+  void editTask(Task t){
+    taskBox.remove(task.id);
+    taskBox.put(t);
+    setState(() {
+      task=t;
+    });
+  }
   
   @override
   Widget build(BuildContext context) {
-    Task task=widget.task;
+    
     DateTime now=DateTime.now();
     String timeleft='';
     if(now.isBefore(task.dueDate)){
@@ -59,8 +93,15 @@ class _TaskCard extends State<TaskCard> {
                 const Spacer(),
                 Text(task.title),
                 const Spacer(),
-                const CircleAvatar(
-                  child: Icon(Icons.edit),
+                CircleAvatar(
+                  child: IconButton(
+                    onPressed: (){
+                      if(task.isDone){
+                        return;
+                      }
+                      _openAddTaskOverlay(context);
+                    },
+                    icon: const Icon(Icons.edit)),
                 ),
               ],
             ),

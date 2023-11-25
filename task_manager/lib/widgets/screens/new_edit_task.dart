@@ -5,9 +5,25 @@ import 'package:task_manager/modals/constants.dart';
 import 'package:task_manager/modals/task.dart';
 
 class NewEditTask extends StatefulWidget {
-  NewEditTask(this._addOrEditTask, {super.key});
+  const NewEditTask(
+    this._addOrEditTask, 
+    {
+      super.key,
+      this.editTitle,
+      this.editDescription,
+      this.editcategory,
+      this.editPriority,
+      this.editAssignedDate,
+      this.editDueDate,
+    });
 
   final void Function(Task) _addOrEditTask;
+  final String? editTitle;
+  final String? editDescription;
+  final Category? editcategory;
+  final int? editPriority;
+  final DateTime? editAssignedDate;
+  final DateTime? editDueDate;
 
   @override
   State<StatefulWidget> createState() {
@@ -20,8 +36,8 @@ class _NewEditTask extends State<NewEditTask> {
   final _descriptionController = TextEditingController();
   final _priorityControlloer = TextEditingController();
   TextEditingController? _addCatergoryController;
-  DateTime _assignedTime = DateTime.now();
-  DateTime _dueTime = DateTime.now().add(const Duration(days: 1));
+  late DateTime _assignedTime;
+  late DateTime _dueTime;
   Category? _category;
   final List<Category> _allcategory = categoryBox.getAll();
 
@@ -177,10 +193,12 @@ class _NewEditTask extends State<NewEditTask> {
   @override
   void initState() {
     super.initState();
-    _titleController.text = 'homework';
-    _descriptionController.text =
-        'description.............................////////////...................................................................................................................';
-    _priorityControlloer.text = '1';
+    _titleController.text = widget.editTitle??'';
+    _descriptionController.text =widget.editDescription??'';
+    _priorityControlloer.text = (widget.editPriority??1).toString();
+    _category=widget.editcategory;
+    _assignedTime=widget.editAssignedDate??DateTime.now();
+    _dueTime=widget.editDueDate?? DateTime.now().add(const Duration(days: 1));
   }
 
   @override
@@ -234,11 +252,11 @@ class _NewEditTask extends State<NewEditTask> {
                       ),
                       //SizedBox(height: 10),
                       DropdownButton(
-                        value: _category,
+                        value: _category==null?null:_category!.id,
                         items: [
                           ..._allcategory.map((category) {
                             return DropdownMenuItem(
-                                value: category,
+                                value: category.id,
                                 child: Text(category.category.toUpperCase()));
                           }),
                           DropdownMenuItem(

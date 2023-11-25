@@ -17,7 +17,7 @@ class TasksScreen extends StatefulWidget {
 class _TasksScreen extends State<TasksScreen> {
   List<Task> _tasksToDisplay = taskBox.getAll();
 
-  void _addOrEditTask(Task task) {
+  void _addTask(Task task) {
     taskBox.put(task);
     setState(() {
       _tasksToDisplay.add(task);
@@ -85,7 +85,7 @@ class _TasksScreen extends State<TasksScreen> {
   void _openAddTaskOverlay(context) {
     showModalBottomSheet(
       context: context,
-      builder: (ctx) => NewEditTask(_addOrEditTask),
+      builder: (ctx) => NewEditTask(_addTask),
       useSafeArea: true,
       isScrollControlled: true,
       //useRootNavigator: true,
