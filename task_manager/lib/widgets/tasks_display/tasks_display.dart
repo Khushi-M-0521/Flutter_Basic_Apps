@@ -172,7 +172,6 @@ class _TasksDisplay extends State<TasksDisplay> {
     return Center(
       child: Container(
         padding: const EdgeInsets.all(5),
-        margin: const EdgeInsets.all(5),
         child: Column(
           children: [
             Filter(

@@ -38,18 +38,18 @@ const ColorScheme kLightColorScheme = ColorScheme(
 
 const ColorScheme kDarkColorScheme = ColorScheme(
   brightness: Brightness.dark,
-  primary: Color(0xffffb300),
+  primary: Color(0xff82b1ff),
   onPrimary: Color(0xff141204),
-  primaryContainer: Color(0xffc87200),
-  onPrimaryContainer: Color(0xfffff1df),
-  secondary: Color(0xff82b1ff),
+  primaryContainer: Color(0xff3770cf),
+  onPrimaryContainer: Color(0xffe8f1ff),
+  secondary: Color(0xff448aff),
   onSecondary: Color(0xff0e1114),
-  secondaryContainer: Color(0xff3770cf),
-  onSecondaryContainer: Color(0xffe8f1ff),
-  tertiary: Color(0xff448aff),
+  secondaryContainer:Color(0xff0b429c) ,
+  onSecondaryContainer:Color(0xffe1eaf8) ,
+  tertiary: Color(0xffffb300),
   onTertiary: Color(0xfff4f9ff),
-  tertiaryContainer: Color(0xff0b429c),
-  onTertiaryContainer: Color(0xffe1eaf8),
+  tertiaryContainer: Color(0xffc87200),
+  onTertiaryContainer: Color(0xfffff1df),
   error: Color.fromARGB(255, 252, 1, 1),
   onError: Color(0xff140c0d),
   errorContainer: Color.fromARGB(255, 255, 32, 36),
@@ -67,7 +67,7 @@ const ColorScheme kDarkColorScheme = ColorScheme(
   inverseSurface: Color(0xfffffbf2),
   onInverseSurface: Color(0xff141312),
   inversePrimary: Color(0xff775b0e),
-  surfaceTint: Color(0xffffb300),
+  surfaceTint:Color(0xff448aff),
 );
 
 

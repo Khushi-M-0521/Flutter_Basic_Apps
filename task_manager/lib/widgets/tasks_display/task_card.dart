@@ -52,7 +52,6 @@ class _TaskCard extends State<TaskCard> {
   
   @override
   Widget build(BuildContext context) {
-    
     DateTime now=DateTime.now();
     String timeleft='';
     if(now.isBefore(task.dueDate)){
@@ -91,10 +90,12 @@ class _TaskCard extends State<TaskCard> {
                   });
                 }),
                 const Spacer(),
-                Text(task.title),
+                Text(task.title,style: Theme.of(context).textTheme.headlineSmall,),
                 const Spacer(),
                 CircleAvatar(
+                  backgroundColor:(!task.isDone)? Theme.of(context).colorScheme.primaryContainer : Theme.of(context).colorScheme.primaryContainer.withOpacity(0.5),
                   child: IconButton(
+                    color: (!task.isDone)? Theme.of(context).colorScheme.onPrimaryContainer : Theme.of(context).colorScheme.onPrimaryContainer.withOpacity(0.5),
                     onPressed: (){
                       if(task.isDone){
                         return;
@@ -113,23 +114,28 @@ class _TaskCard extends State<TaskCard> {
                 overflow: TextOverflow.ellipsis,
                 softWrap: true,
                 textWidthBasis: TextWidthBasis.parent,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
             ),
             
             const SizedBox(height: 4),
             Row(
               children: [
-                Text('Assigned on: ${formattedDate(task.assignedDate)}'),
+                Text('Assigned on: ', style: Theme.of(context).textTheme.bodyLarge,),
+                Text(formattedDate(task.assignedDate),style: Theme.of(context).textTheme.bodyMedium,),
                 const Spacer(),
-                Text('Due on: ${formattedDate(task.dueDate)}'),
+                Text('Due on: ',style: Theme.of(context).textTheme.bodyLarge,),
+                Text(formattedDate(task.dueDate),style: Theme.of(context).textTheme.bodyMedium,)
               ],
             ),
             const SizedBox(height: 4),
             Row(
               children: [
-                Text('Category: ${task.category.category.toUpperCase()}'),
+                Text('Category: ',style: Theme.of(context).textTheme.bodyLarge,),
+                Text(task.category.category.toUpperCase(),style: Theme.of(context).textTheme.bodyMedium,),
                 const Spacer(),
-                Text('Time left: $timeleft'),
+                Text('Time left: ',style: Theme.of(context).textTheme.bodyLarge,),
+                Text(timeleft,style: Theme.of(context).textTheme.bodyMedium,),
               ],
             ),
           ],

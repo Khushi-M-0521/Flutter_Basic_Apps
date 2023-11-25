@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class SegregateTasks extends StatelessWidget{
+class SegregateTasks extends StatelessWidget {
   const SegregateTasks({
     super.key,
     required this.completedTasks,
@@ -16,19 +16,49 @@ class SegregateTasks extends StatelessWidget{
   final void Function() segregateIncompleted;
   final void Function() removeSegregation;
 
-
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        OutlinedButton(onPressed: segregateCompleted, child: Text('Completed: $completedTasks'),),
-        const SizedBox(width: 10),
-        OutlinedButton(onPressed: segregateIncompleted, child: Text('Incomplete: $incompletedTasks')),
-        const SizedBox(width: 10),
-        OutlinedButton(onPressed: removeSegregation, child: Text('Total: ${completedTasks+incompletedTasks}')),
+        OutlinedButton(
+            onPressed: segregateCompleted,
+            child: Text.rich(
+              TextSpan(
+                children: [
+                TextSpan(
+                    text: 'Completed: ',
+                    style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Theme.of(context).colorScheme.primary),),
+                TextSpan(
+                    text: completedTasks.toString(),
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Theme.of(context).colorScheme.primary),)
+              ]),
+            )),
+        const Spacer(),
+        OutlinedButton(
+          onPressed: segregateIncompleted,
+          child: Text.rich(
+            TextSpan(
+              children: [
+                TextSpan(text: 'Incomplete: ',style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Theme.of(context).colorScheme.primary),),
+                TextSpan(text: incompletedTasks.toString(),style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Theme.of(context).colorScheme.primary),),
+              ]
+            )
+          ),
+        ),
+        const Spacer(),
+        OutlinedButton(
+          onPressed: removeSegregation,
+          child: Text.rich(
+            TextSpan(
+              children: [
+                TextSpan(text: 'Total: ',style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Theme.of(context).colorScheme.primary),),
+                TextSpan(text: (completedTasks + incompletedTasks).toString(), style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Theme.of(context).colorScheme.primary),)
+              ]
+            )
+          ),
+        ),
       ],
     );
   }
-
 }

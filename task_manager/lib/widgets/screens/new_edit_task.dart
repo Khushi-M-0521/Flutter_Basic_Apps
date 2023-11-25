@@ -243,7 +243,7 @@ class _NewEditTask extends State<NewEditTask> {
               const SizedBox(height: 20),
               Row(
                 children: [
-                  const SizedBox(width: 15),
+                  const SizedBox(width: 5),
                   Column(
                     children: [
                       const Text(
@@ -292,7 +292,7 @@ class _NewEditTask extends State<NewEditTask> {
                       ),
                     ],
                   ),
-                  const Spacer(),
+                  const SizedBox(width: 70),
                   Expanded(
                     child: TextField(
                       controller: _priorityControlloer,
@@ -303,7 +303,7 @@ class _NewEditTask extends State<NewEditTask> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 15),
+                  const SizedBox(width: 5),
                 ],
               ),
               const SizedBox(height: 20),
