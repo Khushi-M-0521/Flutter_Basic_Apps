@@ -104,17 +104,20 @@ class _NewEditTask extends State<NewEditTask> {
         builder: (ctx) {
           return Dialog(
             child: Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(20),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text('Add Catergory'),
+                  Text('Add Catergory', style: Theme.of(context).textTheme.bodyLarge,),
                   const SizedBox(height: 15),
                   TextField(
                     controller: _addCatergoryController,
                     maxLength: 15,
-                    decoration: const InputDecoration(
-                        labelText: 'Name', hintText: 'generally a word'),
+                    style: Theme.of(context).textTheme.bodyMedium,
+                    decoration: InputDecoration(
+                        labelText: 'Name', 
+                        labelStyle: Theme.of(context).textTheme.labelLarge,
+                        hintText: 'generally a word',),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -225,8 +228,9 @@ class _NewEditTask extends State<NewEditTask> {
               TextField(
                 controller: _titleController,
                 maxLength: 30,
-                decoration: const InputDecoration(
-                  label: Text('Title'),
+                style: Theme.of(context).textTheme.bodyMedium,
+                decoration: InputDecoration(
+                  label: Text('Title',style: Theme.of(context).textTheme.labelLarge,),
                   hintText: 'Title of your task',
                 ),
               ),
@@ -234,9 +238,11 @@ class _NewEditTask extends State<NewEditTask> {
                 controller: _descriptionController,
                 minLines: 1,
                 maxLines: 4,
+                style: Theme.of(context).textTheme.bodyMedium,
                 keyboardType: TextInputType.multiline,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Description',
+                  labelStyle: Theme.of(context).textTheme.labelLarge,
                   hintText: 'Detail of task',
                 ),
               ),
@@ -246,9 +252,10 @@ class _NewEditTask extends State<NewEditTask> {
                   const SizedBox(width: 5),
                   Column(
                     children: [
-                      const Text(
+                      Text(
                         'Caterory: ',
                         textAlign: TextAlign.start,
+                        style: Theme.of(context).textTheme.labelLarge
                       ),
                       //SizedBox(height: 10),
                       DropdownButton(
@@ -257,7 +264,7 @@ class _NewEditTask extends State<NewEditTask> {
                           ..._allcategory.map((category) {
                             return DropdownMenuItem(
                                 value: category.id,
-                                child: Text(category.category.toUpperCase()));
+                                child: Text(category.category.toUpperCase(),style: Theme.of(context).textTheme.bodyMedium));
                           }),
                           DropdownMenuItem(
                             value: ' ',
@@ -272,16 +279,6 @@ class _NewEditTask extends State<NewEditTask> {
                             ),
                           ),
                         ],
-                        // const [
-                        //   DropdownMenuItem(
-                        //     value: 1,
-                        //     child: Text('Category1'),
-                        //   ),
-                        //   DropdownMenuItem(
-                        //     value: 2,
-                        //     child: Text('Category2'),
-                        //   ),
-                        // ],
                         onChanged: (value) {
                           if (value is Category) {
                             setState(() {
@@ -297,8 +294,10 @@ class _NewEditTask extends State<NewEditTask> {
                     child: TextField(
                       controller: _priorityControlloer,
                       keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
+                      style: Theme.of(context).textTheme.bodyMedium,
+                      decoration: InputDecoration(
                         labelText: 'Priority',
+                        labelStyle: Theme.of(context).textTheme.labelLarge,
                         helperText: '1 is highest priority',
                       ),
                     ),
@@ -309,7 +308,12 @@ class _NewEditTask extends State<NewEditTask> {
               const SizedBox(height: 20),
               Row(
                 children: [
-                  Text('Assigned on: ${formattedDate(_assignedTime)}'),
+                  Text.rich(TextSpan(
+                    children: [
+                      TextSpan(text: 'Assigned on: ',style: Theme.of(context).textTheme.labelLarge),
+                      TextSpan(text: formattedDate(_assignedTime),style: Theme.of(context).textTheme.bodyMedium),
+                    ],
+                  ),),
                   IconButton(
                     onPressed: getAssignedDateTime,
                     icon: const Icon(Icons.calendar_month),
@@ -319,7 +323,13 @@ class _NewEditTask extends State<NewEditTask> {
               const SizedBox(height: 10),
               Row(
                 children: [
-                  Text('Due on: ${formattedDate(_dueTime)}'),
+                  Text.rich(
+                    TextSpan(
+                      children: [
+                        TextSpan(text:'Due on: ',style: Theme.of(context).textTheme.labelLarge),
+                        TextSpan(text: formattedDate(_dueTime),style: Theme.of(context).textTheme.bodyMedium)
+                      ],
+                    ),),
                   const SizedBox(width: 32),
                   IconButton(
                     onPressed: getDueDateTime,

@@ -15,16 +15,13 @@ class TasksList extends StatelessWidget{
         itemCount: _tasks.length,
         itemBuilder: (ctx,index)=>Dismissible(
           key: UniqueKey(),
-          background: Container(
-            child: const Row(
+          background: Row(
                 children: [
-                  SizedBox(width: 15,),
-                  Icon(Icons.delete,size: 30,),
-                  Spacer(),
-                  Icon(Icons.delete,size: 30,),
-                  SizedBox(width: 15,),
+                  const SizedBox(width: 15,),
+                  Icon(Icons.delete,size: 30,color: Theme.of(context).colorScheme.error,),
                 ],
-              ),),
+              ),
+          direction: DismissDirection.startToEnd,
           onDismissed: (direction){ removeTask(_tasks[index]); },
           child: TaskCard(_tasks[index]),
         ),

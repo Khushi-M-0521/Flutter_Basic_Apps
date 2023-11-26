@@ -29,6 +29,20 @@ class _TasksScreen extends State<TasksScreen> {
     setState(() {
       _tasksToDisplay.remove(task);
     });
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+          content: const Text('Task deleted'),
+          duration: const Duration(seconds: 3),
+          action: SnackBarAction(
+              label: 'Undo',
+              onPressed: () {
+                setState(() {
+                  _tasksToDisplay.add(task);
+                  taskBox.put(task);
+                });
+              })),
+    );
   }
 
   List<Task> _filterAllTasks() {

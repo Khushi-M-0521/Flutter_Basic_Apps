@@ -16,7 +16,7 @@ const ColorScheme kLightColorScheme = ColorScheme(
   onTertiary: Color(0xffffffff),
   tertiaryContainer: Color(0xffcbd6ff),
   onTertiaryContainer: Color(0xff111214),
-  error: Color.fromARGB(255, 255, 0, 0),
+  error: Color.fromARGB(255, 196, 14, 14),
   onError: Color(0xffffffff),
   errorContainer: Color(0xfffcd8df),
   onErrorContainer: Color(0xff141213),
