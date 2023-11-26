@@ -45,7 +45,7 @@ class _TasksDisplay extends State<TasksDisplay> {
   Category? _category;
   int _filterId=0;
   DateTime now=DateTime.now();
-  late List<Task> _segregatedTasks;
+  List<Task> _segregatedTasks=[];
   bool _isSegregated=false;
 
   Future _pickDateTime(
@@ -199,6 +199,11 @@ class _TasksDisplay extends State<TasksDisplay> {
             const SizedBox(
               height: 20,
             ),
+            (_isSegregated?_segregatedTasks:widget._tasksToDisplay).isEmpty ?
+            Image.asset(
+              'assests/images/TaskUnmatched.png',
+              color: Theme.of(context).colorScheme.primary,
+            ):
             TasksList(
               _isSegregated?_segregatedTasks:widget._tasksToDisplay, 
               removeTask: widget.removeTask,),

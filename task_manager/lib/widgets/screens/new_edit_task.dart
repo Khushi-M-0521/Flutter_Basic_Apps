@@ -259,11 +259,11 @@ class _NewEditTask extends State<NewEditTask> {
                       ),
                       //SizedBox(height: 10),
                       DropdownButton(
-                        value: _category==null?null:_category!.id,
+                        value: _category,
                         items: [
                           ..._allcategory.map((category) {
                             return DropdownMenuItem(
-                                value: category.id,
+                                value: category,
                                 child: Text(category.category.toUpperCase(),style: Theme.of(context).textTheme.bodyMedium));
                           }),
                           DropdownMenuItem(

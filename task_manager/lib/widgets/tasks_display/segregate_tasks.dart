@@ -28,7 +28,7 @@ class SegregateTasks extends StatelessWidget {
                 children: [
                 TextSpan(
                     text: 'Completed: ',
-                    style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Theme.of(context).colorScheme.primary),),
+                    style: Theme.of(context).textTheme.labelMedium!.copyWith(color: Theme.of(context).colorScheme.primary),),
                 TextSpan(
                     text: completedTasks.toString(),
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Theme.of(context).colorScheme.primary),)
@@ -40,7 +40,7 @@ class SegregateTasks extends StatelessWidget {
           child: Text.rich(
             TextSpan(
               children: [
-                TextSpan(text: 'Incomplete: ',style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Theme.of(context).colorScheme.primary),),
+                TextSpan(text: 'Incomplete: ',style: Theme.of(context).textTheme.labelMedium!.copyWith(color: Theme.of(context).colorScheme.primary),),
                 TextSpan(text: incompletedTasks.toString(),style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Theme.of(context).colorScheme.primary),),
               ]
             )
@@ -52,7 +52,7 @@ class SegregateTasks extends StatelessWidget {
           child: Text.rich(
             TextSpan(
               children: [
-                TextSpan(text: 'Total: ',style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Theme.of(context).colorScheme.primary),),
+                TextSpan(text: 'Total: ',style: Theme.of(context).textTheme.labelMedium!.copyWith(color: Theme.of(context).colorScheme.primary),),
                 TextSpan(text: (completedTasks + incompletedTasks).toString(), style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Theme.of(context).colorScheme.primary),)
               ]
             )

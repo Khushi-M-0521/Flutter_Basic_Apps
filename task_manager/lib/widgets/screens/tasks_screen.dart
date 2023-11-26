@@ -126,7 +126,13 @@ class _TasksScreen extends State<TasksScreen> {
               icon: const Icon(Icons.add_task_outlined)),
         ],
       ),
-      body: TasksDisplay(
+      body: 
+        _tasksToDisplay.isEmpty?
+        Image.asset(
+          'assests/images/NoTask.png',
+          color: Theme.of(context).colorScheme.primary,
+        ):
+        TasksDisplay(
         _tasksToDisplay,
         key: UniqueKey(),
         removeTask: _removeTask,
