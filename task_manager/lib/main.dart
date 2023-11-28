@@ -23,6 +23,7 @@ class TaskApp extends StatelessWidget {
       theme: ThemeData.light().copyWith(
         colorScheme: kLightColorScheme,
         appBarTheme: const AppBarTheme().copyWith(
+          toolbarHeight: 50,
           backgroundColor: kLightColorScheme.primary,
           foregroundColor: kLightColorScheme.onPrimary,
           titleTextStyle:const  TextStyle(fontWeight: FontWeight.bold,fontSize: 24),
@@ -43,6 +44,7 @@ class TaskApp extends StatelessWidget {
         colorScheme: kDarkColorScheme,
         appBarTheme: const AppBarTheme().copyWith(
           //backgroundColor: kDarkColorScheme.primary,
+          toolbarHeight: 50,
           backgroundColor: kDarkColorScheme.surfaceTint,
           foregroundColor: kDarkColorScheme.onPrimary,
           titleTextStyle: TextStyle(color: kDarkColorScheme.onPrimary,fontWeight: FontWeight.bold,fontSize: 24),

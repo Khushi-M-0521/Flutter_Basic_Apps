@@ -92,7 +92,7 @@ class Filter extends StatelessWidget {
         ),
         IconButton(
           disabledColor: const Color.fromARGB(0, 255, 255, 255),
-          onPressed:(filterId==0 || filterId==5 || filterId==6)?null: (){
+          onPressed: (filterId==0 || filterId==5 || filterId==6)?null:(){
             if(filterId==1){
               pickedDate(
                 initialDate: tasksOn,
@@ -120,7 +120,7 @@ class Filter extends StatelessWidget {
                 who: 4,
               );
               return;
-            }
+           }
           }, 
           icon: calender),
       ],

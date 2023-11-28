@@ -34,7 +34,7 @@ class SegregateTasks extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Theme.of(context).colorScheme.primary),)
               ]),
             )),
-        const Spacer(),
+        const SizedBox(width: 10,),
         OutlinedButton(
           onPressed: segregateIncompleted,
           child: Text.rich(
@@ -46,7 +46,7 @@ class SegregateTasks extends StatelessWidget {
             )
           ),
         ),
-        const Spacer(),
+        const SizedBox(width: 10,),
         OutlinedButton(
           onPressed: removeSegregation,
           child: Text.rich(

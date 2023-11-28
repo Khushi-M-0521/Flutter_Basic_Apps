@@ -115,7 +115,7 @@ class _TasksScreen extends State<TasksScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              setState(() {});
+              setState(() {_tasksToDisplay = taskBox.getAll();});
             },
             icon: const Icon(Icons.replay_outlined),
           ),
@@ -131,6 +131,8 @@ class _TasksScreen extends State<TasksScreen> {
         Image.asset(
           'assests/images/NoTask.png',
           color: Theme.of(context).colorScheme.primary,
+          width: MediaQuery.of(context).size.width,
+          alignment: Alignment.topRight,
         ):
         TasksDisplay(
         _tasksToDisplay,

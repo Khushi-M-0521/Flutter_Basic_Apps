@@ -217,6 +217,7 @@ class _NewEditTask extends State<NewEditTask> {
 
   @override
   Widget build(BuildContext context) {
+    _allcategory.map((e) {print(e==_category);print(e.id);});
     return SizedBox(
       height: double.infinity,
       width: MediaQuery.of(context).size.width - 20,
@@ -259,11 +260,11 @@ class _NewEditTask extends State<NewEditTask> {
                       ),
                       //SizedBox(height: 10),
                       DropdownButton(
-                        value: _category,
+                        value: _category==null?null:_category!.id,
                         items: [
                           ..._allcategory.map((category) {
                             return DropdownMenuItem(
-                                value: category,
+                                value: category.id,
                                 child: Text(category.category.toUpperCase(),style: Theme.of(context).textTheme.bodyMedium));
                           }),
                           DropdownMenuItem(
@@ -280,9 +281,9 @@ class _NewEditTask extends State<NewEditTask> {
                           ),
                         ],
                         onChanged: (value) {
-                          if (value is Category) {
+                          if (value is int) {
                             setState(() {
-                              _category = value;
+                              _category = categoryBox.get(value);
                             });
                           }
                         },

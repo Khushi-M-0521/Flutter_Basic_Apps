@@ -168,12 +168,14 @@ class _TasksDisplay extends State<TasksDisplay> {
 
   @override
   Widget build(BuildContext context) {
+    final width=MediaQuery.of(context).size.width;
     (_isSegregated?_segregatedTasks:widget._tasksToDisplay).sort((task1, task2) => sortTasks(task1, task2),);
+    
     return Center(
       child: Container(
         padding: const EdgeInsets.all(5),
         child: Column(
-          children: [
+          children: width<600?[
             Filter(
               //key: UniqueKey(),
               tasksOn: _tasksOn,
@@ -187,7 +189,7 @@ class _TasksDisplay extends State<TasksDisplay> {
               setFilter:  _setFilter,
             ),
             const SizedBox(
-              height: 20,
+              height: 10,
             ),
             SegregateTasks(
               completedTasks: completedTasks, 
@@ -197,12 +199,54 @@ class _TasksDisplay extends State<TasksDisplay> {
               removeSegregation: _removeSegregation,
             ),
             const SizedBox(
-              height: 20,
+              height: 10,
             ),
             (_isSegregated?_segregatedTasks:widget._tasksToDisplay).isEmpty ?
             Image.asset(
               'assests/images/TaskUnmatched.png',
               color: Theme.of(context).colorScheme.primary,
+            ):
+            TasksList(
+              _isSegregated?_segregatedTasks:widget._tasksToDisplay, 
+              removeTask: widget.removeTask,),
+          ]:
+          [
+            Row(
+              children: [
+                Filter(
+              //key: UniqueKey(),
+              tasksOn: _tasksOn,
+              tasksFrom: _tasksFrom,
+              dueTasksOn: _dueTasksOn,
+              dueTasksTill: _dueTasksTill,
+              category: _category,
+              pickedDate: _pickDateTime, 
+              setCategory: _setCategory, 
+              filterId: _filterId, 
+              setFilter:  _setFilter,
+            ),
+            const SizedBox(
+              width: 20,
+            ),
+            SegregateTasks(
+              completedTasks: completedTasks, 
+              incompletedTasks: incompletedTasks, 
+              segregateCompleted: _segregateComplete, 
+              segregateIncompleted: _segregateIncomplete, 
+              removeSegregation: _removeSegregation,
+            ),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            (_isSegregated?_segregatedTasks:widget._tasksToDisplay).isEmpty ?
+            Center(
+              child: Image.asset(
+                'assests/images/TaskUnmatched.png',
+                color: Theme.of(context).colorScheme.primary,
+                height: 200,
+              ),
             ):
             TasksList(
               _isSegregated?_segregatedTasks:widget._tasksToDisplay, 
