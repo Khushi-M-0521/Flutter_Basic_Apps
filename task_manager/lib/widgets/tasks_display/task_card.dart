@@ -89,7 +89,7 @@ class _TaskCard extends State<TaskCard> {
                     }),
                 const Spacer(),
                 Text(
-                  task.title,
+                  task.isDone?'  ${task.title} -':task.title,
                   style: task.isDone
                       ? Theme.of(context).textTheme.headlineSmall!.copyWith(
                           decoration: TextDecoration.lineThrough,

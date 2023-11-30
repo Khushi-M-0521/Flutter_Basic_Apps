@@ -116,12 +116,12 @@ class Filter extends StatelessWidget {
               value: 6,
               child: Row(
                 children: [
-                  const Text('Caterogized as: '),
+                  const Text('Caterogized as:  '),
                   DropdownButton(
                     value: category == null ? _allcategory[0].id : category!.id,
                     items: _allcategory
                         .map((ctg) => DropdownMenuItem(
-                            value: ctg.id, child: Text(ctg.category)))
+                            value: ctg.id, child: Text(ctg.category.toUpperCase(),style: Theme.of(context).textTheme.bodyMedium,)))
                         .toList(),
                     onChanged: (ctgId) {
                       setCategory(ctgId);

@@ -15,7 +15,17 @@ class TasksScreen extends StatefulWidget {
 }
 
 class _TasksScreen extends State<TasksScreen> {
-  List<Task> _tasksToDisplay = taskBox.getAll();
+  late List<Task> _tasksToDisplay;
+
+  @override
+  void initState(){
+    super.initState();
+    Query<Task> queryLast30Days=taskBox.query(Task_.dueDate.lessThan(DateTime.now().millisecondsSinceEpoch).and(Task_.isDone.equals(true))).build();
+    List<int> oldTaskIds=queryLast30Days.find().map((task) => task.id).toList();
+    taskBox.removeMany(oldTaskIds);
+    queryLast30Days.close();
+    _tasksToDisplay = taskBox.getAll();
+  }
 
   void _addTask(Task task) {
     taskBox.put(task);

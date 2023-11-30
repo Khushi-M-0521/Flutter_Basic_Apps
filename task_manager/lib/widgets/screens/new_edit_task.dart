@@ -374,7 +374,7 @@ class _NewEditTask extends State<NewEditTask> {
                               child: const Row(
                                 children: [
                                   Icon(Icons.add),
-                                  Text('Add Category'),
+                                  Text('   Add Category'),
                                 ],
                               ),
                             ),
@@ -397,7 +397,7 @@ class _NewEditTask extends State<NewEditTask> {
                               child: const Row(
                                 children: [
                                   Icon(Icons.settings),
-                                  Text('Manage'),
+                                  Text('    Manage'),
                                 ],
                               ),
                             ),
