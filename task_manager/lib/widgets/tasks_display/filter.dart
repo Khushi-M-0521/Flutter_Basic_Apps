@@ -22,7 +22,8 @@ class Filter extends StatelessWidget {
   final DateTime dueTasksOn;
   final DateTime dueTasksTill;
   final Category? category;
-  final Future Function({required DateTime initialDate, required int who}) pickedDate;
+  final Future Function({required DateTime initialDate, required int who})
+      pickedDate;
   final void Function(int? ctgId) setCategory;
   final int filterId;
   final void Function(int? fltId) setFilter;
@@ -49,19 +50,63 @@ class Filter extends StatelessWidget {
             ),
             DropdownMenuItem(
               value: 1,
-              child: Text('Tasks on: ${formattedDate(tasksOn)}'),
+              child: Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                        text: 'Tasks on:   ',
+                        style: Theme.of(context).textTheme.bodyLarge),
+                    TextSpan(
+                        text: formattedDate(tasksOn),
+                        style: Theme.of(context).textTheme.bodyMedium),
+                  ],
+                ),
+              ),
             ),
             DropdownMenuItem(
               value: 2,
-              child: Text('Tasks from: ${formattedDate(tasksFrom)}'),
+              child: Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                        text: 'Tasks from:   ',
+                        style: Theme.of(context).textTheme.bodyLarge),
+                    TextSpan(
+                        text: formattedDate(tasksFrom),
+                        style: Theme.of(context).textTheme.bodyMedium),
+                  ],
+                ),
+              ),
             ),
             DropdownMenuItem(
               value: 3,
-              child: Text('Due tasks on: ${formattedDate(dueTasksOn)}'),
+              child: Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                        text: 'Due tasks on:   ',
+                        style: Theme.of(context).textTheme.bodyLarge),
+                    TextSpan(
+                        text: formattedDate(dueTasksOn),
+                        style: Theme.of(context).textTheme.bodyMedium),
+                  ],
+                ),
+              ),
             ),
             DropdownMenuItem(
               value: 4,
-              child: Text('Due tasks till: ${formattedDate(dueTasksTill)}'),
+              child: Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                        text: 'Due tasks till:   ',
+                        style: Theme.of(context).textTheme.bodyLarge),
+                    TextSpan(
+                        text: formattedDate(dueTasksTill),
+                        style: Theme.of(context).textTheme.bodyMedium),
+                  ],
+                ),
+              ),
             ),
             const DropdownMenuItem(
               value: 5,
@@ -91,38 +136,40 @@ class Filter extends StatelessWidget {
           },
         ),
         IconButton(
-          disabledColor: const Color.fromARGB(0, 255, 255, 255),
-          onPressed: (filterId==0 || filterId==5 || filterId==6)?null:(){
-            if(filterId==1){
-              pickedDate(
-                initialDate: tasksOn,
-                who: 1,
-              );
-              return;
-            }
-            if(filterId==2){
-              pickedDate(
-                initialDate: tasksFrom,
-                who: 2,
-              );
-              return;
-            }
-            if(filterId==3){
-              pickedDate(
-                initialDate: dueTasksOn,
-                who: 3,
-              );
-              return;
-            }
-            if(filterId==4){
-              pickedDate(
-                initialDate: dueTasksTill,
-                who: 4,
-              );
-              return;
-           }
-          }, 
-          icon: calender),
+            disabledColor: const Color.fromARGB(0, 255, 255, 255),
+            onPressed: (filterId == 0 || filterId == 5 || filterId == 6)
+                ? null
+                : () {
+                    if (filterId == 1) {
+                      pickedDate(
+                        initialDate: tasksOn,
+                        who: 1,
+                      );
+                      return;
+                    }
+                    if (filterId == 2) {
+                      pickedDate(
+                        initialDate: tasksFrom,
+                        who: 2,
+                      );
+                      return;
+                    }
+                    if (filterId == 3) {
+                      pickedDate(
+                        initialDate: dueTasksOn,
+                        who: 3,
+                      );
+                      return;
+                    }
+                    if (filterId == 4) {
+                      pickedDate(
+                        initialDate: dueTasksTill,
+                        who: 4,
+                      );
+                      return;
+                    }
+                  },
+            icon: calender),
       ],
     );
   }

@@ -122,6 +122,7 @@ class _TasksScreen extends State<TasksScreen> {
           IconButton(
               onPressed: () {
                 _openAddTaskOverlay(context);
+                setState(() {_tasksToDisplay = taskBox.getAll();});
               },
               icon: const Icon(Icons.add_task_outlined)),
         ],

@@ -5,7 +5,7 @@ import 'package:task_manager/modals/task.dart';
 import 'package:task_manager/widgets/screens/new_edit_task.dart';
 
 class TaskCard extends StatefulWidget {
-  const TaskCard(this.task,{super.key});
+  const TaskCard(this.task, {super.key});
 
   final Task task;
 
@@ -19,9 +19,9 @@ class _TaskCard extends State<TaskCard> {
   late Task task;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    task=widget.task;
+    task = widget.task;
   }
 
   void _openAddTaskOverlay(context) {
@@ -42,37 +42,33 @@ class _TaskCard extends State<TaskCard> {
     );
   }
 
-  void editTask(Task t){
+  void editTask(Task t) {
     taskBox.remove(task.id);
     taskBox.put(t);
     setState(() {
-      task=t;
+      task = t;
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
-    DateTime now=DateTime.now();
-    String timeleft='';
-    if(now.isBefore(task.dueDate)){
-      Duration left=task.dueDate.difference(now);
-      if(left.inDays!=0){
-      timeleft='${left.inDays} days ';
+    DateTime now = DateTime.now();
+    String timeleft = '';
+    if (now.isBefore(task.dueDate)) {
+      Duration left = task.dueDate.difference(now);
+      if (left.inDays != 0) {
+        timeleft = '${left.inDays} days ';
+      } else if (left.inHours != 0) {
+        timeleft = '${left.inHours} hrs. ';
+      } else if (left.inDays != 0) {
+        timeleft = '${left.inMinutes} mins.';
+      } else {
+        timeleft = 'passed';
       }
-      else if(left.inHours!=0){
-        timeleft='${left.inHours} hrs. ';
-      }
-      else if(left.inDays!=0){
-        timeleft='${left.inMinutes} mins.';
-      }
-      else{
-        timeleft='passed';
-      }
+    } else {
+      timeleft = 'passed';
     }
-    else{
-      timeleft='passed';
-    }
-    
+
     return Card(
       margin: const EdgeInsets.all(5),
       child: Padding(
@@ -82,34 +78,53 @@ class _TaskCard extends State<TaskCard> {
           children: [
             Row(
               children: [
-                Checkbox(value: task.isDone, onChanged: (isCheck) {
-                  taskBox.remove(task.id);
-                  setState(() {
-                    task.isDone=isCheck??task.isDone;
-                    taskBox.put(task);
-                  });
-                }),
+                Checkbox(
+                    value: task.isDone,
+                    onChanged: (isCheck) {
+                      taskBox.remove(task.id);
+                      setState(() {
+                        task.isDone = isCheck ?? task.isDone;
+                        taskBox.put(task);
+                      });
+                    }),
                 const Spacer(),
-                Text(task.title,style: Theme.of(context).textTheme.headlineSmall,),
+                Text(
+                  task.title,
+                  style: task.isDone
+                      ? Theme.of(context).textTheme.headlineSmall!.copyWith(
+                          decoration: TextDecoration.lineThrough,
+                          decorationThickness: 2)
+                      : Theme.of(context).textTheme.headlineSmall,
+                ),
                 const Spacer(),
                 CircleAvatar(
-                  backgroundColor:(!task.isDone)? Theme.of(context).colorScheme.primaryContainer : Theme.of(context).colorScheme.primaryContainer.withOpacity(0.5),
+                  backgroundColor: (!task.isDone)
+                      ? Theme.of(context).colorScheme.primaryContainer
+                      : Theme.of(context)
+                          .colorScheme
+                          .primaryContainer
+                          .withOpacity(0.5),
                   child: IconButton(
-                    color: (!task.isDone)? Theme.of(context).colorScheme.onPrimaryContainer : Theme.of(context).colorScheme.onPrimaryContainer.withOpacity(0.5),
-                    onPressed: (){
-                      if(task.isDone){
-                        return;
-                      }
-                      _openAddTaskOverlay(context);
-                    },
-                    icon: const Icon(Icons.edit)),
+                      color: (!task.isDone)
+                          ? Theme.of(context).colorScheme.onPrimaryContainer
+                          : Theme.of(context)
+                              .colorScheme
+                              .onPrimaryContainer
+                              .withOpacity(0.5),
+                      onPressed: () {
+                        if (task.isDone) {
+                          return;
+                        }
+                        _openAddTaskOverlay(context);
+                      },
+                      icon: const Icon(Icons.edit)),
                 ),
               ],
             ),
             SizedBox(
               width: double.infinity,
               child: Text(
-                task.description??' ',
+                task.description ?? ' ',
                 maxLines: 4,
                 overflow: TextOverflow.ellipsis,
                 softWrap: true,
@@ -117,25 +132,48 @@ class _TaskCard extends State<TaskCard> {
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
             ),
-            
             const SizedBox(height: 4),
             Row(
               children: [
-                Text('Assigned on: ', style: Theme.of(context).textTheme.bodyLarge,),
-                Text(formattedDate(task.assignedDate),style: Theme.of(context).textTheme.bodyMedium,),
+                Text(
+                  'Assigned on: ',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                Text(
+                  formattedDate(task.assignedDate),
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
                 const Spacer(),
-                Text('Due on: ',style: Theme.of(context).textTheme.bodyLarge,),
-                Text(formattedDate(task.dueDate),style: Theme.of(context).textTheme.bodyMedium,)
+                Text(
+                  'Due on: ',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                Text(
+                  formattedDate(task.dueDate),
+                  style: Theme.of(context).textTheme.bodyMedium,
+                )
               ],
             ),
             const SizedBox(height: 4),
             Row(
               children: [
-                Text('Category: ',style: Theme.of(context).textTheme.bodyLarge,),
-                Text(task.category.category.toUpperCase(),style: Theme.of(context).textTheme.bodyMedium,),
+                Text(
+                  'Category: ',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                Text(
+                  task.category.category.toUpperCase(),
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
                 const Spacer(),
-                Text('Time left: ',style: Theme.of(context).textTheme.bodyLarge,),
-                Text(timeleft,style: Theme.of(context).textTheme.bodyMedium,),
+                Text(
+                  'Time left: ',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                Text(
+                  timeleft,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
               ],
             ),
           ],

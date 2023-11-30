@@ -33,7 +33,7 @@ class _SplashScreen extends State<SplashScreen>{
       body: Center(
         child: Image.asset(
           'assests/images/TaskManagerIcon.png',
-          scale: 0.5,
+          width: 300,
           color: isdarkMode?const Color.fromARGB(185, 255, 255, 255):null,
         ),
       ),
