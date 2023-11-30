@@ -22,7 +22,8 @@ class Filter extends StatelessWidget {
   final DateTime dueTasksOn;
   final DateTime dueTasksTill;
   final Category? category;
-  final Future Function({required DateTime initialDate, required int who}) pickedDate;
+  final Future Function({required DateTime initialDate, required int who})
+      pickedDate;
   final void Function(int? ctgId) setCategory;
   final int filterId;
   final void Function(int? fltId) setFilter;
@@ -36,9 +37,7 @@ class Filter extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Icon(Icons.filter_list),
-        const SizedBox(
-          width: 20,
-        ),
+        const SizedBox(width: 20),
         DropdownButton(
           value: filterId,
           alignment: Alignment.center,
@@ -120,7 +119,11 @@ class Filter extends StatelessWidget {
                     value: category == null ? _allcategory[0].id : category!.id,
                     items: _allcategory
                         .map((ctg) => DropdownMenuItem(
-                            value: ctg.id, child: Text(ctg.category.toUpperCase(),style: Theme.of(context).textTheme.bodyMedium,)))
+                            value: ctg.id,
+                            child: Text(
+                              ctg.category.toUpperCase(),
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            )))
                         .toList(),
                     onChanged: (ctgId) {
                       setCategory(ctgId);

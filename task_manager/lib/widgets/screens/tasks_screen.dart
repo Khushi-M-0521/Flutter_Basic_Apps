@@ -18,10 +18,15 @@ class _TasksScreen extends State<TasksScreen> {
   late List<Task> _tasksToDisplay;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    Query<Task> queryLast30Days=taskBox.query(Task_.dueDate.lessThan(DateTime.now().millisecondsSinceEpoch).and(Task_.isDone.equals(true))).build();
-    List<int> oldTaskIds=queryLast30Days.find().map((task) => task.id).toList();
+    Query<Task> queryLast30Days = taskBox
+        .query(Task_.dueDate
+            .lessThan(DateTime.now().millisecondsSinceEpoch)
+            .and(Task_.isDone.equals(true)))
+        .build();
+    List<int> oldTaskIds =
+        queryLast30Days.find().map((task) => task.id).toList();
     taskBox.removeMany(oldTaskIds);
     queryLast30Days.close();
     _tasksToDisplay = taskBox.getAll();
@@ -55,7 +60,7 @@ class _TasksScreen extends State<TasksScreen> {
     );
   }
 
-  void _onTaskDone( Task task,bool? isCheck){
+  void _onTaskDone(Task task, bool? isCheck) {
     taskBox.remove(task.id);
     task.isDone = isCheck ?? task.isDone;
     taskBox.put(task);
@@ -121,7 +126,6 @@ class _TasksScreen extends State<TasksScreen> {
       builder: (ctx) => NewEditTask(_addTask),
       useSafeArea: true,
       isScrollControlled: true,
-      //useRootNavigator: true,
     );
   }
 
@@ -134,39 +138,42 @@ class _TasksScreen extends State<TasksScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              setState(() {_tasksToDisplay = taskBox.getAll();});
+              setState(() {
+                _tasksToDisplay = taskBox.getAll();
+              });
             },
             icon: const Icon(Icons.replay_outlined),
           ),
           IconButton(
               onPressed: () {
                 _openAddTaskOverlay(context);
-                setState(() {_tasksToDisplay = taskBox.getAll();});
+                setState(() {
+                  _tasksToDisplay = taskBox.getAll();
+                });
               },
               icon: const Icon(Icons.add_task_outlined)),
         ],
       ),
-      body: 
-        _tasksToDisplay.isEmpty?
-        Image.asset(
-          'assests/images/NoTask.png',
-          color: Theme.of(context).colorScheme.primary,
-          width: MediaQuery.of(context).size.width,
-          alignment: Alignment.topRight,
-        ):
-        TasksDisplay(
-        _tasksToDisplay,
-        key: UniqueKey(),
-        removeTask: _removeTask,
-        filterAllTasks: _filterAllTasks,
-        filterTasksOn: _filterTasksOn,
-        filterTasksFrom: _filterTasksFrom,
-        filterDueTasksOn: _filterDueTasksOn,
-        filterDueTasksTill: _filterDueTasksTill,
-        filterDelayed: _filterDelayed,
-        filterCategory: _filterCategory,
-        onTaskDone: _onTaskDone,
-      ),
+      body: _tasksToDisplay.isEmpty
+          ? Image.asset(
+              'assests/images/NoTask.png',
+              color: Theme.of(context).colorScheme.primary,
+              width: MediaQuery.of(context).size.width,
+              alignment: Alignment.topRight,
+            )
+          : TasksDisplay(
+              _tasksToDisplay,
+              key: UniqueKey(),
+              removeTask: _removeTask,
+              filterAllTasks: _filterAllTasks,
+              filterTasksOn: _filterTasksOn,
+              filterTasksFrom: _filterTasksFrom,
+              filterDueTasksOn: _filterDueTasksOn,
+              filterDueTasksTill: _filterDueTasksTill,
+              filterDelayed: _filterDelayed,
+              filterCategory: _filterCategory,
+              onTaskDone: _onTaskDone,
+            ),
     );
   }
 }

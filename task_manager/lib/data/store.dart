@@ -3,6 +3,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:task_manager/modals/category.dart';
 import 'package:task_manager/modals/task.dart';
 import 'package:task_manager/objectbox.g.dart'; // created by `flutter pub run build_runner build`
+
 late final Box<Task> taskBox;
 late final Box<Category> categoryBox;
 late final Query<Task> queryTasksOn;

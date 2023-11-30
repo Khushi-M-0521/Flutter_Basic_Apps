@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:task_manager/data/store.dart';
 import 'package:task_manager/modals/category.dart';
@@ -83,20 +82,21 @@ class _NewEditTask extends State<NewEditTask> {
     if (_addCatergoryController!.text.isEmpty) {
       // ignore: use_build_context_synchronously
       await showDialog(
-          context: context,
-          builder: (ctx) => AlertDialog(
-                title: Text(
-                  'Category name not found !',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-                actions: [
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(ctx);
-                      },
-                      child: const Text('Okay'))
-                ],
-              ));
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text(
+            'Category name not found !',
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
+          actions: [
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(ctx);
+                },
+                child: const Text('Okay'))
+          ],
+        ),
+      );
       return;
     }
     final newCategory = Category(_addCatergoryController!.text);
@@ -110,137 +110,166 @@ class _NewEditTask extends State<NewEditTask> {
   void addCategoryDialog() {
     _addCatergoryController = TextEditingController();
     showDialog(
-        context: context,
-        builder: (ctx) {
-          return Dialog(
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    'Add Catergory',
-                    style: Theme.of(context).textTheme.bodyLarge,
+      context: context,
+      builder: (ctx) {
+        return Dialog(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Add Catergory',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                const SizedBox(height: 15),
+                TextField(
+                  controller: _addCatergoryController,
+                  maxLength: 15,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                  decoration: InputDecoration(
+                    labelText: 'Name',
+                    labelStyle: Theme.of(context).textTheme.labelLarge,
+                    hintText: 'generally a word',
                   ),
-                  const SizedBox(height: 15),
-                  TextField(
-                    controller: _addCatergoryController,
-                    maxLength: 15,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                    decoration: InputDecoration(
-                      labelText: 'Name',
-                      labelStyle: Theme.of(context).textTheme.labelLarge,
-                      hintText: 'generally a word',
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(ctx);
+                      },
+                      child: const Text('Cancel'),
                     ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pop(ctx);
-                        },
-                        child: const Text('Cancel'),
-                      ),
-                      ElevatedButton(
-                        onPressed: addCategory,
-                        child: const Text('Save'),
-                      )
-                    ],
-                  ),
-                ],
-              ),
+                    ElevatedButton(
+                      onPressed: addCategory,
+                      child: const Text('Save'),
+                    )
+                  ],
+                ),
+              ],
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 
-  Future<void> removeCategory(int id) async{
+  Future<void> removeCategory(int id) async {
     Category deleteCategory = categoryBox.get(id)!;
     await showDialog(
-      context: context, 
+      context: context,
       builder: (ctx) => AlertDialog(
-       title: Text('Are you sure to delete ${deleteCategory.category.toUpperCase()} category?'),
-       content: const Text('By deleting this catergory, you are deleting all tasks under this catergory.'), 
-       actions: [
-        TextButton(onPressed: (){
-          Navigator.pop(context);
-          }, 
-          child: const Text('No')),
-        ElevatedButton(onPressed: (){
-          categoryBox.remove(id);
-          queryCategory.param(Task_.categoryId).value=id;
-          List<int> tasksIds=queryCategory.find().map((task)=>task.id).toList();
-          taskBox.removeMany(tasksIds);
-          Navigator.pop(context);
-          setState(() {
-            _allcategory = categoryBox.getAll();
-            //managableCategories.removeAt(index);
-          });
-          }, 
-          child: const Text('Yes'))
-       ],
-      )
+        title: Text(
+            'Are you sure to delete ${deleteCategory.category.toUpperCase()} category?'),
+        content: const Text(
+            'By deleting this catergory, you are deleting all tasks under this catergory.'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('No'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              categoryBox.remove(id);
+              queryCategory.param(Task_.categoryId).value = id;
+              List<int> tasksIds =
+                  queryCategory.find().map((task) => task.id).toList();
+              taskBox.removeMany(tasksIds);
+              Navigator.pop(context);
+              setState(() {
+                _allcategory = categoryBox.getAll();
+                //managableCategories.removeAt(index);
+              });
+            },
+            child: const Text('Yes'),
+          )
+        ],
+      ),
     );
   }
 
   void manageCategoryDialog() {
-    managableCategories=_allcategory.where((category) {
-      queryCategory.param(Task_.categoryId).value=category.id;
-      var tasks= queryCategory.find().where((task) => !task.isDone);
+    managableCategories = _allcategory.where((category) {
+      queryCategory.param(Task_.categoryId).value = category.id;
+      var tasks = queryCategory.find().where((task) => !task.isDone);
       return tasks.isEmpty;
     }).toList();
 
     showDialog(
-      context: context, 
+      context: context,
       builder: ((ctx) => Dialog(
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('Manage Category', style: Theme.of(context).textTheme.bodyLarge,),
-              const SizedBox(height: 10),
-              Text('    Can delete category only if all tasks under that category are completed.',style: Theme.of(context).textTheme.bodyMedium,),
-              SizedBox(
-                height: 300,
-                child: (managableCategories.isNotEmpty)?ListView.builder(
-                  padding: const EdgeInsets.all(10),
-                  itemCount: managableCategories.length,
-                  itemBuilder: (context,index){
-                    return Row(
-                      children: [
-                        Text(managableCategories[index].category.toUpperCase(),style: Theme.of(context).textTheme.bodyLarge,),
-                        const Spacer(),
-                        IconButton(
-                          onPressed: () async {
-                            await removeCategory(managableCategories[index].id);
-                            // ignore: use_build_context_synchronously
-                            Navigator.pop(context);
-                            manageCategoryDialog();
-                          }, 
-                          icon: const Icon(Icons.delete))
-                      ],
-                    );
-                  }
-                ):
-                Center(
-                  child: Text('   No categories can be managed. Either there are no more categories or there are categories with incompleted tasks',style: Theme.of(context).textTheme.bodyMedium,),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  ElevatedButton(onPressed: (){
-                    Navigator.pop(context);
-                    Navigator.pop(context);
-                  }, child:const Text('OK'))
+                  Text(
+                    'Manage Category',
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    '    Can delete category only if all tasks under that category are completed.',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  SizedBox(
+                    height: 300,
+                    child: (managableCategories.isNotEmpty)
+                        ? ListView.builder(
+                            padding: const EdgeInsets.all(10),
+                            itemCount: managableCategories.length,
+                            itemBuilder: (context, index) {
+                              return Row(
+                                children: [
+                                  Text(
+                                    managableCategories[index]
+                                        .category
+                                        .toUpperCase(),
+                                    style:
+                                        Theme.of(context).textTheme.bodyLarge,
+                                  ),
+                                  const Spacer(),
+                                  IconButton(
+                                    onPressed: () async {
+                                      await removeCategory(
+                                          managableCategories[index].id);
+                                      // ignore: use_build_context_synchronously
+                                      Navigator.pop(context);
+                                      manageCategoryDialog();
+                                    },
+                                    icon: const Icon(Icons.delete),
+                                  )
+                                ],
+                              );
+                            },
+                          )
+                        : Center(
+                            child: Text(
+                              '   No categories can be managed. Either there are no more categories or there are categories with incompleted tasks',
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                          ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                        },
+                        child: const Text('OK'),
+                      )
+                    ],
+                  )
                 ],
-              )
-            ],
-          ),
-        ),
-      )),
+              ),
+            ),
+          )),
     );
   }
 
@@ -266,18 +295,19 @@ class _NewEditTask extends State<NewEditTask> {
 
     if (!isValid) {
       showDialog(
-          context: context,
-          builder: (ctx) => AlertDialog(
-                title: Text(errorTitle!),
-                content: Text(errorDescription!),
-                actions: [
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(ctx);
-                      },
-                      child: const Text('Okay'))
-                ],
-              ));
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text(errorTitle!),
+          content: Text(errorDescription!),
+          actions: [
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(ctx);
+                },
+                child: const Text('Okay'))
+          ],
+        ),
+      );
       return;
     }
     final newTask = Task(
@@ -301,7 +331,7 @@ class _NewEditTask extends State<NewEditTask> {
     _category = widget.editcategory;
     _assignedTime = widget.editAssignedDate ?? DateTime.now();
     _dueTime =
-        widget.editDueDate ?? DateTime.now().add(const Duration(days: 1));
+    widget.editDueDate ?? DateTime.now().add(const Duration(days: 1));
   }
 
   @override
@@ -317,7 +347,9 @@ class _NewEditTask extends State<NewEditTask> {
 
   @override
   Widget build(BuildContext context) {
-    _allcategory.sort((ctg1,ctg2)=>ctg1.category.toUpperCase().compareTo(ctg2.category.toUpperCase()));
+    _allcategory.sort((ctg1, ctg2) =>
+        ctg1.category.toUpperCase().compareTo(ctg2.category.toUpperCase()));
+    
     return SizedBox(
       height: double.infinity,
       width: MediaQuery.of(context).size.width - 20,
@@ -359,7 +391,6 @@ class _NewEditTask extends State<NewEditTask> {
                       Text('Caterory: ',
                           textAlign: TextAlign.start,
                           style: Theme.of(context).textTheme.labelLarge),
-                      //SizedBox(height: 10),
                       DropdownButton(
                         value: _category == null ? null : _category!.id,
                         menuMaxHeight: 200,
@@ -367,10 +398,12 @@ class _NewEditTask extends State<NewEditTask> {
                           DropdownMenuItem(
                             value: ' ',
                             child: TextButton(
-                              onPressed: (){ setState(() {
-                                Navigator.pop(context);
-                                addCategoryDialog();
-                              });},
+                              onPressed: () {
+                                setState(() {
+                                  Navigator.pop(context);
+                                  addCategoryDialog();
+                                });
+                              },
                               child: const Row(
                                 children: [
                                   Icon(Icons.add),
@@ -391,9 +424,9 @@ class _NewEditTask extends State<NewEditTask> {
                           DropdownMenuItem(
                             value: '  ',
                             child: TextButton(
-                              onPressed: _allcategory.isNotEmpty?
-                                manageCategoryDialog
-                                :null,
+                              onPressed: _allcategory.isNotEmpty
+                                  ? manageCategoryDialog
+                                  : null,
                               child: const Row(
                                 children: [
                                   Icon(Icons.settings),

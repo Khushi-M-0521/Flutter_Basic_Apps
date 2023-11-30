@@ -70,8 +70,6 @@ const ColorScheme kDarkColorScheme = ColorScheme(
   surfaceTint:Color(0xff448aff),
 );
 
-
-
 final formatter = DateFormat.yM();
 final dayFormatter = DateFormat.d();
 String formattedDate(DateTime date) {

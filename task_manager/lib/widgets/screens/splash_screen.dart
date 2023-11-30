@@ -3,18 +3,16 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:task_manager/widgets/screens/tasks_screen.dart';
 
-class SplashScreen extends StatefulWidget{
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
   State<SplashScreen> createState() {
     return _SplashScreen();
   }
-
 }
 
-class _SplashScreen extends State<SplashScreen>{
-
+class _SplashScreen extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
@@ -34,10 +32,9 @@ class _SplashScreen extends State<SplashScreen>{
         child: Image.asset(
           'assests/images/TaskManagerIcon.png',
           width: 300,
-          color: isdarkMode?const Color.fromARGB(185, 255, 255, 255):null,
+          color: isdarkMode ? const Color.fromARGB(185, 255, 255, 255) : null,
         ),
       ),
     );
   }
-
 }
