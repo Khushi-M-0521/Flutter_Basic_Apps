@@ -55,6 +55,15 @@ class _TasksScreen extends State<TasksScreen> {
     );
   }
 
+  void _onTaskDone( Task task,bool? isCheck){
+    taskBox.remove(task.id);
+    task.isDone = isCheck ?? task.isDone;
+    taskBox.put(task);
+    setState(() {
+      _tasksToDisplay = taskBox.getAll();
+    });
+  }
+
   List<Task> _filterAllTasks() {
     _tasksToDisplay = taskBox.getAll();
     return _tasksToDisplay;
@@ -156,6 +165,7 @@ class _TasksScreen extends State<TasksScreen> {
         filterDueTasksTill: _filterDueTasksTill,
         filterDelayed: _filterDelayed,
         filterCategory: _filterCategory,
+        onTaskDone: _onTaskDone,
       ),
     );
   }

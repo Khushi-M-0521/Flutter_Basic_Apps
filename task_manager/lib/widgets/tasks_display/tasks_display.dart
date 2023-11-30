@@ -19,6 +19,7 @@ class TasksDisplay extends StatefulWidget {
     required this.filterDueTasksTill,
     required this.filterDelayed,
     required this.filterCategory,
+    required this.onTaskDone,
   });
 
   List<Task> _tasksToDisplay;
@@ -30,6 +31,7 @@ class TasksDisplay extends StatefulWidget {
   final List<Task> Function(DateTime) filterDueTasksTill;
   final List<Task> Function() filterDelayed;
   final List<Task> Function(int) filterCategory;
+  final void Function(Task,bool?) onTaskDone;
 
   @override
   State<TasksDisplay> createState() {
@@ -43,7 +45,6 @@ class _TasksDisplay extends State<TasksDisplay> {
   DateTime _dueTasksOn = DateTime.now();
   DateTime _dueTasksTill = DateTime.now().add(const Duration(days: 1));
   Category? _category;
-  int _filterId=0;
   DateTime now=DateTime.now();
   List<Task> _segregatedTasks=[];
   bool _isSegregated=false;
@@ -92,44 +93,44 @@ class _TasksDisplay extends State<TasksDisplay> {
       case 0:
         widget.filterAllTasks();
         setState(() {
-          _filterId=0;
+          filterId=0;
           widget._tasksToDisplay=widget.filterAllTasks(); 
           _isSegregated=false;  
         });
       case 1:
         setState(() {
-          _filterId=1; 
+          filterId=1; 
           widget._tasksToDisplay=widget.filterTasksOn(_tasksOn);
           _isSegregated=false;
         });
         
       case 2:
         setState(() {
-          _filterId=2;   
+          filterId=2;   
           widget._tasksToDisplay=widget.filterTasksFrom(_tasksFrom); 
           _isSegregated=false;
         });
       case 3:
         setState(() {
-          _filterId=3;   
+          filterId=3;   
           widget._tasksToDisplay=widget.filterDueTasksOn(_dueTasksOn); 
           _isSegregated=false;
         });
       case 4:
         setState(() {
-          _filterId=4;    
+          filterId=4;    
           widget._tasksToDisplay=widget.filterDueTasksTill(_dueTasksTill);
           _isSegregated=false;
         });
       case 5:
         setState(() {
-          _filterId=5;  
+          filterId=5;  
           widget._tasksToDisplay=widget.filterDelayed();  
           _isSegregated=false;
         });
       case 6:
         setState(() {
-          _filterId=6; 
+          filterId=6; 
           if(_category!=null){ 
           widget._tasksToDisplay=widget.filterCategory(_category!.id); 
           }
@@ -185,7 +186,7 @@ class _TasksDisplay extends State<TasksDisplay> {
               category: _category,
               pickedDate: _pickDateTime, 
               setCategory: _setCategory, 
-              filterId: _filterId, 
+              filterId: filterId, 
               setFilter:  _setFilter,
             ),
             const SizedBox(
@@ -208,7 +209,8 @@ class _TasksDisplay extends State<TasksDisplay> {
             ):
             TasksList(
               _isSegregated?_segregatedTasks:widget._tasksToDisplay, 
-              removeTask: widget.removeTask,),
+              removeTask: widget.removeTask,
+              onTaskDone: widget.onTaskDone,),
           ]:
           [
             Row(
@@ -222,7 +224,7 @@ class _TasksDisplay extends State<TasksDisplay> {
               category: _category,
               pickedDate: _pickDateTime, 
               setCategory: _setCategory, 
-              filterId: _filterId, 
+              filterId: filterId, 
               setFilter:  _setFilter,
             ),
             const SizedBox(
@@ -250,7 +252,8 @@ class _TasksDisplay extends State<TasksDisplay> {
             ):
             TasksList(
               _isSegregated?_segregatedTasks:widget._tasksToDisplay, 
-              removeTask: widget.removeTask,),
+              removeTask: widget.removeTask,
+              onTaskDone: widget.onTaskDone,),
           ],
         ),
       ),

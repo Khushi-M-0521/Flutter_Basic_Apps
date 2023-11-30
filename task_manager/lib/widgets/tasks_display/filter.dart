@@ -22,8 +22,7 @@ class Filter extends StatelessWidget {
   final DateTime dueTasksOn;
   final DateTime dueTasksTill;
   final Category? category;
-  final Future Function({required DateTime initialDate, required int who})
-      pickedDate;
+  final Future Function({required DateTime initialDate, required int who}) pickedDate;
   final void Function(int? ctgId) setCategory;
   final int filterId;
   final void Function(int? fltId) setFilter;

@@ -3,10 +3,11 @@ import 'package:task_manager/modals/task.dart';
 import 'package:task_manager/widgets/tasks_display/task_card.dart';
 
 class TasksList extends StatelessWidget{
-  const TasksList(this._tasks,{super.key, required this.removeTask});
+  const TasksList(this._tasks,{super.key, required this.removeTask,required this.onTaskDone});
 
   final List<Task> _tasks;
   final void Function(Task) removeTask;
+  final void Function(Task,bool?) onTaskDone;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class TasksList extends StatelessWidget{
               ),
           direction: DismissDirection.startToEnd,
           onDismissed: (direction){ removeTask(_tasks[index]); },
-          child: TaskCard(_tasks[index]),
+          child: TaskCard(_tasks[index],onTaskDone:onTaskDone),
         ),
       ):GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -43,7 +44,7 @@ class TasksList extends StatelessWidget{
               ),
           direction: DismissDirection.startToEnd,
           onDismissed: (direction){ removeTask(_tasks[index]); },
-          child: TaskCard(_tasks[index]),
+          child: TaskCard(_tasks[index],onTaskDone:onTaskDone),
         ),
       ),
     );

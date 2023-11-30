@@ -5,9 +5,10 @@ import 'package:task_manager/modals/task.dart';
 import 'package:task_manager/widgets/screens/new_edit_task.dart';
 
 class TaskCard extends StatefulWidget {
-  const TaskCard(this.task, {super.key});
+  const TaskCard(this.task, {super.key,required this.onTaskDone});
 
   final Task task;
+  final void Function(Task, bool?) onTaskDone;
 
   @override
   State<TaskCard> createState() {
@@ -81,11 +82,12 @@ class _TaskCard extends State<TaskCard> {
                 Checkbox(
                     value: task.isDone,
                     onChanged: (isCheck) {
-                      taskBox.remove(task.id);
-                      setState(() {
-                        task.isDone = isCheck ?? task.isDone;
-                        taskBox.put(task);
-                      });
+                      widget.onTaskDone(task,isCheck);
+                      // taskBox.remove(task.id);
+                      // setState(() {
+                      //   task.isDone = isCheck ?? task.isDone;
+                      //   taskBox.put(task);
+                      // });
                     }),
                 const Spacer(),
                 Text(
