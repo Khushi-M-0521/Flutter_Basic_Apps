@@ -77,17 +77,20 @@ String formattedDate(DateTime date) {
 }
 
 int sortTasks(Task task1, Task task2){
-  if( task1.assignedDate.isBefore( task2.assignedDate )){
+  final task1Date=DateTime(task1.assignedDate.year,task1.assignedDate.month,task1.assignedDate.day);
+  final task2Date=DateTime(task2.assignedDate.year,task2.assignedDate.month,task2.assignedDate.day);
+  
+  if( task1Date.isBefore( task2Date )){
     return 1;
   }
-  if(task1.assignedDate.isAfter(task2.assignedDate) ){
+  if(task1Date.isAfter(task2Date) ){
     return -1;
   }
   if(task1.priority>task2.priority){
-    return -1;
+    return 1;
   }
   if(task1.priority<task2.priority){
-    return 1;
+    return -1;
   }
   return 0;
 }

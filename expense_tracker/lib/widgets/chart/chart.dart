@@ -64,7 +64,8 @@ class _ChartState extends State<Chart> {
       } else if (_chartType == ChartType.specificDate) {
         _chartExpenses = [];
         for (final exp in widget._allExpenses) {
-          if (exp.date.isAfter(_specificDate!)) {
+          var date=DateTime(exp.date.year,exp.date.month,exp.date.day);
+          if (date.isAtSameMomentAs(_specificDate!)) {
             _chartExpenses.add(exp);
           }
         }

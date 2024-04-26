@@ -358,6 +358,7 @@ class _NewEditTask extends State<NewEditTask> {
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
           child: Column(
             children: [
+              //title
               TextField(
                 controller: _titleController,
                 maxLength: 30,
@@ -370,6 +371,7 @@ class _NewEditTask extends State<NewEditTask> {
                   hintText: 'Title of your task',
                 ),
               ),
+              //descrption
               TextField(
                 controller: _descriptionController,
                 minLines: 1,
@@ -386,6 +388,7 @@ class _NewEditTask extends State<NewEditTask> {
               Row(
                 children: [
                   const SizedBox(width: 5),
+                  //category
                   Column(
                     children: [
                       Text('Caterory: ',
@@ -447,6 +450,7 @@ class _NewEditTask extends State<NewEditTask> {
                     ],
                   ),
                   const SizedBox(width: 70),
+                  //prioroty
                   Expanded(
                     child: TextField(
                       controller: _priorityControlloer,
@@ -463,6 +467,7 @@ class _NewEditTask extends State<NewEditTask> {
                 ],
               ),
               const SizedBox(height: 20),
+              //assigned date:
               Row(
                 children: [
                   Text.rich(
@@ -484,6 +489,7 @@ class _NewEditTask extends State<NewEditTask> {
                 ],
               ),
               const SizedBox(height: 10),
+              //due date
               Row(
                 children: [
                   Text.rich(
@@ -506,6 +512,7 @@ class _NewEditTask extends State<NewEditTask> {
                 ],
               ),
               const SizedBox(height: 10),
+              //cancel and submit
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [

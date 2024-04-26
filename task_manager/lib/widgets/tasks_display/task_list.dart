@@ -17,7 +17,7 @@ class TasksList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-
+    
     return Expanded(
       child: width < 600
           ? ListView.builder(

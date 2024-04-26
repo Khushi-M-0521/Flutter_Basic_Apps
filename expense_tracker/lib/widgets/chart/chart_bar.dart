@@ -13,7 +13,7 @@ class Chart_Bar extends StatelessWidget {
         child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 7),
       child: FractionallySizedBox(
-        heightFactor: fill < 0.25 ? 0.25 : fill,
+        heightFactor: fill < 0.25 ? (amt==0?0: 0.25) : fill,
         child: DecoratedBox(
           decoration: BoxDecoration(
             shape: BoxShape.rectangle,

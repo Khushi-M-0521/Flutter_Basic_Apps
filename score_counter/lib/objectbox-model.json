@@ -1,0 +1,81 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:8926923041559503039",
+      "lastPropertyId": "5:2610490248922375698",
+      "name": "Game",
+      "properties": [
+        {
+          "id": "1:973542755938222331",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:331506008158644135",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:5430380004126223072",
+          "name": "numberOfPlayers",
+          "type": 6
+        },
+        {
+          "id": "4:4990061584410184310",
+          "name": "note",
+          "type": 9
+        },
+        {
+          "id": "5:2610490248922375698",
+          "name": "isAscend",
+          "type": 1
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:1252305314867826816",
+      "lastPropertyId": "4:6496075119674921709",
+      "name": "Player",
+      "properties": [
+        {
+          "id": "1:7077404728400845322",
+          "name": "gameId",
+          "type": 6
+        },
+        {
+          "id": "2:8425573303793509498",
+          "name": "player",
+          "type": 9
+        },
+        {
+          "id": "3:1999754994008640501",
+          "name": "score",
+          "type": 6
+        },
+        {
+          "id": "4:6496075119674921709",
+          "name": "pid",
+          "type": 6,
+          "flags": 1
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "2:1252305314867826816",
+  "lastIndexId": "0:0",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}
