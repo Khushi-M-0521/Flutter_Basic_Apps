@@ -2,6 +2,7 @@ import 'package:dice/dice_roller.dart';
 import 'package:dice/main.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class MultipleDice extends StatefulWidget {
   MultipleDice(this.n, {super.key});
 
