@@ -1,8 +1,8 @@
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:score_counter/modal/game.dart';
-import 'package:score_counter/objectbox.g.dart';
-import 'package:score_counter/screens/home_screen.dart'; // created by `flutter pub run build_runner build`
+import 'package:score_counter/objectbox.g.dart'; // created by `flutter pub run build_runner build`
+
 
 late final Query<Player> getPlayers;
 

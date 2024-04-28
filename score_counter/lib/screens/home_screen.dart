@@ -93,7 +93,7 @@ class _HomeScreen extends State<HomeScreen>{
                     const SizedBox(width: 5),
                     FilledButton(
                       onPressed: (){
-                        int id=uniqueId();
+                        //int id=uniqueId();
                         Game g=Game(
                           name: name_controlller.text,
                           numberOfPlayers:int.tryParse(number_controller.text)!, 
@@ -217,7 +217,7 @@ class _HomeScreen extends State<HomeScreen>{
                         gamebox.remove(game.id);
                         getPlayers.param(Player_.gameId).value = game.id;
                         List<Player> p = getPlayers.find();
-                        if(p!=null){p.map((e) => playerbox.remove(e.pid));}
+                        if(p!=[]){p.map((e) => playerbox.remove(e.pid));}
                         setState(() {});
                       }, 
                       icon:const Icon(Icons.delete)
