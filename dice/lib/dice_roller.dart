@@ -18,6 +18,9 @@ class _DiceRollerState extends State<DiceRoller>{
   var currDiceRoll=3;
 
   void rollDice() {
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(content: Text("Rolled!!")));
     setState(() {
       currDiceRoll = randomizer.nextInt(6)+1;
     });
