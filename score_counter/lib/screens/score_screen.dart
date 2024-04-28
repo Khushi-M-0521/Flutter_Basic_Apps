@@ -91,17 +91,19 @@ class _ScoreScreen extends State<ScoreScreen> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             const Text("Points"),
-                            const SizedBox(height: 5),
                             Row(
                               children: [
                                 const Text("Desend",style: TextStyle(fontSize: 8),),
-                                Switch(
-                                  value: game.isAscend,
-                                  onChanged: (order) {
-                                    setState(() {
-                                      game.isAscend = order;
-                                    });
-                                  },
+                                Transform.scale(
+                                  scale: 0.75,
+                                  child: Switch(
+                                    value: game.isAscend,
+                                    onChanged: (order) {
+                                      setState(() {
+                                        game.isAscend = order;
+                                      });
+                                    },
+                                  ),
                                 ),
                                 const Text("Ascend",style: TextStyle(fontSize: 8),),
                               ],
@@ -114,18 +116,20 @@ class _ScoreScreen extends State<ScoreScreen> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           const Text("Next Point"),
-                          const SizedBox(height: 5),
-                          FilledButton(
-                            onPressed: () {
-                              for(int i=0;i<n;i++){
-                                players[i].score+=int.tryParse( next_score_controller[i].text)!;
-                                next_score_controller[i].text="0";
-                                playerbox.remove(players[i].pid);
-                                playerbox.put(players[i]);
-                              }
-                              setState(() {});
-                            },
-                            child: const Text("Add"),
+                          Transform.scale(
+                            scale: 0.75,
+                            child: FilledButton(
+                              onPressed: () {
+                                for(int i=0;i<n;i++){
+                                  players[i].score+=int.tryParse( next_score_controller[i].text)!;
+                                  next_score_controller[i].text="0";
+                                  playerbox.remove(players[i].pid);
+                                  playerbox.put(players[i]);
+                                }
+                                setState(() {});
+                              },
+                              child: const Text("Add"),
+                            ),
                           ),
                         ],
                       ),
