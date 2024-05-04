@@ -6,8 +6,7 @@ import 'package:healthy_food/screens/meals.dart';
 import 'package:healthy_food/widgets/category_grid_item.dart';
 
 class CategoriesScreen extends StatelessWidget {
-  const CategoriesScreen({super.key, required this.onToggeleFavorite,required this.availableMeals});
-  final void Function(Meal) onToggeleFavorite;
+  const CategoriesScreen({super.key, required this.availableMeals});
   final List<Meal> availableMeals;
 
   void _selectCategory(BuildContext context, Category category) {
@@ -15,7 +14,7 @@ class CategoriesScreen extends StatelessWidget {
 
     Navigator.of(context).push(MaterialPageRoute(
         builder: (ctx) => MealsScrenn(
-            meals: filteredMealList, title: category.title, onToggeleFavorite: onToggeleFavorite,),),); //Navigator.push(context, route);
+            meals: filteredMealList, title: category.title, ),),); //Navigator.push(context, route);
   }
 
   @override
