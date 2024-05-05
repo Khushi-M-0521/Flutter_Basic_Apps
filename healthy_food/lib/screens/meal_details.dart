@@ -4,35 +4,59 @@ import 'package:healthy_food/modals/meal.dart';
 import 'package:healthy_food/provider/favorites_provider.dart';
 
 class MealDetailsScreen extends ConsumerWidget {
-  const MealDetailsScreen({super.key, required this.meal,});
+  const MealDetailsScreen({
+    super.key,
+    required this.meal,
+  });
 
   final Meal meal;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final favoriteMeals=ref.watch(favroritMealsProvider);
-    final isFavorite=favoriteMeals.contains(meal);
+    final favoriteMeals = ref.watch(favroritMealsProvider);
+    final isFavorite = favoriteMeals.contains(meal);
 
     return Scaffold(
       appBar: AppBar(
         title: Text(meal.title),
         actions: [
-          IconButton(onPressed: (){
-            final wasAdded= ref.read(favroritMealsProvider.notifier).toggleMealFavoriteStatus(meal);
-            ScaffoldMessenger.of(context).clearSnackBars();
-            ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(wasAdded?"Meal added a favorite.":"Meal removed.")));
-          }, icon:Icon(isFavorite? Icons.star:Icons.star_border))
+          IconButton(
+            onPressed: () {
+              final wasAdded = ref
+                  .read(favroritMealsProvider.notifier)
+                  .toggleMealFavoriteStatus(meal);
+              ScaffoldMessenger.of(context).clearSnackBars();
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text(
+                      wasAdded ? "Meal added a favorite." : "Meal removed.")));
+            },
+            icon: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 300),
+              transitionBuilder: (child, animation) {
+                return RotationTransition(
+                  turns: Tween<double>(begin: 0.8,end: 1).animate(animation),//turns: animation,
+                  child: child,
+                );
+              },
+              child: Icon(
+                isFavorite ? Icons.star : Icons.star_border,
+                key: ValueKey(isFavorite),
+              ),
+            ),
+          ),
         ],
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Image.network(
-              meal.imageUrl,
-              height: 200,
-              width: double.infinity,
-              fit: BoxFit.cover,
+            Hero(
+              tag: meal.id,
+              child: Image.network(
+                meal.imageUrl,
+                height: 200,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
             ),
             const SizedBox(
               height: 14,
@@ -54,8 +78,10 @@ class MealDetailsScreen extends ConsumerWidget {
                       color: Theme.of(context).colorScheme.onBackground,
                     ),
               ),
-            const SizedBox(height: 24,),
-             Text(
+            const SizedBox(
+              height: 24,
+            ),
+            Text(
               "Steps",
               style: Theme.of(context).textTheme.titleLarge!.copyWith(
                     color: Theme.of(context).colorScheme.primary,
@@ -67,10 +93,11 @@ class MealDetailsScreen extends ConsumerWidget {
             ),
             for (final step in meal.steps)
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 child: Text(
                   step,
-                  textAlign: TextAlign.center ,
+                  textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         color: Theme.of(context).colorScheme.onBackground,
                       ),
